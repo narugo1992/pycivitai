@@ -1,0 +1,5 @@
+hbutils>=0.9.1
+click>=7.0.0
+requests
+filelock
+tqdm>=4.42.1
