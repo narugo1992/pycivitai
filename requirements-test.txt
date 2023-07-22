@@ -13,4 +13,3 @@ easydict>=1.7,<2
 testtools>=2
 where>=1.0.2
 responses>=0.20.0
-gchar==0.0.8
