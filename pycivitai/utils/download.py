@@ -4,8 +4,6 @@ from contextlib import contextmanager
 import requests
 from tqdm.auto import tqdm
 
-from .session import get_requests_session, srequest
-
 
 class _FakeClass:
     def update(self, *args, **kwargs):
@@ -52,8 +50,8 @@ def download_file(url, filename, expected_size: int = None, desc=None, session=N
     :returns: The filename of the downloaded file.
     :rtype: str
     """
-    session = session or get_requests_session()
-    response = srequest(session, 'GET', url, stream=True, allow_redirects=True, **kwargs)
+    session = session or requests.session()
+    response = session.get(url, stream=True, allow_redirects=True, **kwargs)
     expected_size = expected_size or response.headers.get('Content-Length', None)
     expected_size = int(expected_size) if expected_size is not None else expected_size
 
