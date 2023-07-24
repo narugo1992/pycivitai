@@ -1,7 +1,9 @@
 import os
-from typing import Iterator, Tuple, Union
+from typing import Iterator, Tuple, Union, List
 
 import requests
+from hbutils.collection import nested_map
+from hbutils.string import format_tree
 
 from .base import _soft_name_strip
 from .model import ModelManager
@@ -74,3 +76,26 @@ class DispatchManager:
     def get_file(self, model_name_or_id: Union[str, int, None],
                  version: Union[str, int, None] = None, pattern: str = ...):
         return self._get_model_manager(model_name_or_id).get_file(version, pattern)
+
+    def list_models(self) -> List[ModelManager]:
+        retval = []
+        for model_name, model_id, model_dir in self._list_local_models():
+            retval.append(ModelManager(model_dir, model_name, offline=True))
+
+        return retval
+
+    def _repr(self):
+        return f'<{self.__class__.__name__} directory: {self.root_dir!r}>'
+
+    def _tree(self):
+        return self, [item._tree() for item in self.list_models()]
+
+    def __str__(self):
+        return format_tree(
+            nested_map(repr, self._tree()),
+            lambda x: x[0],
+            lambda x: x[1],
+        )
+
+    def __repr__(self):
+        return self._repr()

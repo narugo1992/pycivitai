@@ -31,6 +31,7 @@ def _name_strip(name: str) -> str:
 
 def find_model_by_name(model_name: str) -> dict:
     resp = get_session().get(f'{ENDPOINT}/api/v1/models', params={'query': model_name})
+    resp.raise_for_status()
     collected_items = []
     for item in resp.json()['items']:
         if _name_strip(item['name']) == _name_strip(model_name):

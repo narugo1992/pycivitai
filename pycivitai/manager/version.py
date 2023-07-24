@@ -3,10 +3,13 @@ import logging
 import os.path
 import pathlib
 import shutil
-from typing import Union, Optional, Tuple
+from dataclasses import dataclass
+from typing import Union, Optional, Tuple, Iterator, List
 
 import requests
 from filelock import FileLock
+from hbutils.collection import nested_map
+from hbutils.string import format_tree
 from hbutils.system import TemporaryDirectory
 
 from ..client import get_session, ENDPOINT, find_resource, Resource, find_model, find_version, OFFLINE_MODE, \
@@ -24,6 +27,14 @@ class LocalFileNotFound(Exception):
 
 class LocalFileDuplicated(Exception):
     pass
+
+
+@dataclass
+class LocalFile:
+    filename: str
+    hash: str
+    size: int
+    is_primary: bool
 
 
 class VersionManager:
@@ -87,6 +98,14 @@ class VersionManager:
             return True
         else:
             return (resource.size != local_size) or (resource.sha256 != local_hash)
+
+    def _iter_local_files(self) -> Iterator[Tuple[str, str, int]]:
+        for f in os.listdir(self._d_files):
+            _hash, _size = self._get_file_meta(f)
+            if not _hash or _size is None:
+                continue
+
+            yield f, _hash, _size
 
     def _download_resource(self, resource: Resource):
         with TemporaryDirectory() as td:
@@ -158,3 +177,28 @@ class VersionManager:
                     f'The expected resource file {local_file!r} was not found, ' \
                     f'indicating a BUG. Please contact the developer.'
                 return local_file
+
+    def list_files(self) -> List[LocalFile]:
+        with self.lock:
+            retval = []
+            primary_file = self._primary_file
+            for filename, hash_, size_ in self._iter_local_files():
+                retval.append(LocalFile(filename, hash_, size_, filename == primary_file))
+
+            return retval
+
+    def _repr(self):
+        return f'<{self.__class__.__name__} model: {self.model_name_or_id!r}, version: {self.version!r}>'
+
+    def _tree(self):
+        return self, [(item, []) for item in self.list_files()]
+
+    def __str__(self):
+        return format_tree(
+            nested_map(repr, self._tree()),
+            lambda x: x[0],
+            lambda x: x[1],
+        )
+
+    def __repr__(self):
+        return self._repr()

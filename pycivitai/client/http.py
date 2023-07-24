@@ -5,7 +5,7 @@ from typing import Callable
 
 import requests
 
-STORAGE_DIR = os.environ.get('CIVITAI_HOME', os.path.expanduser('~/.cache/civitai'))
+
 ENDPOINT = 'https://civitai.com'
 OFFLINE_MODE = bool(os.environ.get('CIVITAI_OFFLINE'))
 

@@ -1,7 +1,9 @@
 import os
-from typing import Union, Optional, Iterator, Tuple
+from typing import Union, Optional, Iterator, Tuple, List
 
 import requests
+from hbutils.collection import nested_map
+from hbutils.string import format_tree
 
 from .base import _soft_name_strip
 from .version import VersionManager
@@ -24,7 +26,7 @@ class ModelManager:
         self._model_data = model_data
 
         os.makedirs(root_dir, exist_ok=True)
-        self._d_versions = os.path.join(self.root_dir, 'versions')
+        self._d_versions = os.path.join(self.root_dir)
         self._offline = offline
 
     def _get_model(self):
@@ -39,9 +41,9 @@ class ModelManager:
         for dir_ in os.listdir(self._d_versions):
             segs = dir_.split('__')
             if os.path.isdir(os.path.join(self._d_versions, dir_)) and len(segs) == 2:
-                stripped_name, id_ = segs
-                id_ = int(id_)
-                yield stripped_name, id_, os.path.join(self._d_versions, dir_)
+                version_name, version_id = segs
+                version_id = int(version_id)
+                yield version_name, version_id, os.path.join(self._d_versions, dir_)
 
     def _find_online_version(self, version: Union[str, int, None]):
         version_data = find_version(self._get_model(), version)
@@ -94,3 +96,26 @@ class ModelManager:
 
     def get_file(self, version: Union[str, int, None] = None, pattern: str = ...):
         return self._get_version_manager(version).get_file(pattern)
+
+    def list_versions(self) -> List[VersionManager]:
+        retval = []
+        for version_name, version_id, version_dir in self._list_local_versions():
+            retval.append(VersionManager(version_dir, self.model_name_or_id, version_name, offline=True))
+
+        return retval
+
+    def _tree(self):
+        return self, [item._tree() for item in self.list_versions()]
+
+    def _repr(self):
+        return f'<{self.__class__.__name__} model: {self.model_name_or_id!r}>'
+
+    def __str__(self):
+        return format_tree(
+            nested_map(repr, self._tree()),
+            lambda x: x[0],
+            lambda x: x[1],
+        )
+
+    def __repr__(self):
+        return self._repr()
