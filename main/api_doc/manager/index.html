@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycivitai.config &mdash; pycivitai 0.0.1 documentation</title>
+  <title>pycivitai.manager &mdash; pycivitai 0.0.1 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
   <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="pycivitai.config.meta" href="meta.html" />
-    <link rel="prev" title="pycivitai.client.resource" href="../client/resource.html" /> 
+    <link rel="next" title="pycivitai.manager.version" href="version.html" />
+    <link rel="prev" title="pycivitai.dispatch" href="../dispatch/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -93,12 +93,14 @@
 <p><span class="caption-text">API Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../client/index.html">pycivitai.client</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">pycivitai.config</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="meta.html">pycivitai.config.meta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config/index.html">pycivitai.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dispatch/index.html">pycivitai.dispatch</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pycivitai.manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="version.html">pycivitai.manager.version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">pycivitai.manager.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dispatch.html">pycivitai.manager.dispatch</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../dispatch/index.html">pycivitai.dispatch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../manager/index.html">pycivitai.manager</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../utils/index.html">pycivitai.utils</a></li>
 </ul>
 
@@ -145,13 +147,13 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>pycivitai.config</li>
+      <li>pycivitai.manager</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/api_doc/config/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/api_doc/manager/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -166,16 +168,28 @@
             
     
     
-  <section id="module-pycivitai.config">
-<span id="pycivitai-config"></span><h1>pycivitai.config<a class="headerlink" href="#module-pycivitai.config" title="Permalink to this headline">¶</a></h1>
+  <section id="module-pycivitai.manager">
+<span id="pycivitai-manager"></span><h1>pycivitai.manager<a class="headerlink" href="#module-pycivitai.manager" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="meta.html">pycivitai.config.meta</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="meta.html#title">__TITLE__</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meta.html#version">__VERSION__</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meta.html#description">__DESCRIPTION__</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meta.html#author">__AUTHOR__</a></li>
-<li class="toctree-l2"><a class="reference internal" href="meta.html#author-email">__AUTHOR_EMAIL__</a></li>
+<li class="toctree-l1"><a class="reference internal" href="version.html">pycivitai.manager.version</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="version.html#versionmanager">VersionManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version.html#localfileduplicated">LocalFileDuplicated</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version.html#localfilenotfound">LocalFileNotFound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version.html#localprimaryfileunset">LocalPrimaryFileUnset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="version.html#localfile">LocalFile</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">pycivitai.manager.model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#modelmanager">ModelManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#localversionnotfound">LocalVersionNotFound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#localversionduplicated">LocalVersionDuplicated</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dispatch.html">pycivitai.manager.dispatch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dispatch.html#dispatchmanager">DispatchManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dispatch.html#localmodelnotfound">LocalModelNotFound</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dispatch.html#localmodelduplicated">LocalModelDuplicated</a></li>
 </ul>
 </li>
 </ul>
@@ -191,10 +205,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="meta.html" class="btn btn-neutral float-right" title="pycivitai.config.meta" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="version.html" class="btn btn-neutral float-right" title="pycivitai.manager.version" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../client/resource.html" class="btn btn-neutral float-left" title="pycivitai.client.resource" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../dispatch/index.html" class="btn btn-neutral float-left" title="pycivitai.dispatch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

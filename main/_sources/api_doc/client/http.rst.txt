@@ -37,7 +37,7 @@ OFFLINE_MODE
 OfflineModeEnabled
 --------------------------
 
-.. autoclass:: OfflineModeEnabled
+.. autoexception:: OfflineModeEnabled
 
 
 

@@ -89,8 +89,10 @@
 </ul>
 <p><span class="caption-text">API Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../api_doc/config/index.html">pycivitai.config</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api_doc/client/index.html">pycivitai.client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_doc/config/index.html">pycivitai.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_doc/dispatch/index.html">pycivitai.dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_doc/manager/index.html">pycivitai.manager</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api_doc/utils/index.html">pycivitai.utils</a></li>
 </ul>
 
@@ -311,7 +313,7 @@
     <span class="k">return</span> <span class="n">select_version</span></div>
 
 
-<div class="viewcode-block" id="find_resource"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.find_resource">[docs]</a><span class="k">def</span> <span class="nf">find_resource</span><span class="p">(</span><span class="n">model_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">version_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="o">...</span><span class="p">):</span>
+<div class="viewcode-block" id="find_resource"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.find_resource">[docs]</a><span class="k">def</span> <span class="nf">find_resource</span><span class="p">(</span><span class="n">model_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">version_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the specified resource from the model and version data.</span>
 
@@ -328,7 +330,7 @@
 <span class="sd">    :raises ResourceDuplicated: If multiple resources with the same name are found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># find chosen resource</span>
-    <span class="k">if</span> <span class="n">pattern</span> <span class="ow">is</span> <span class="o">...</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">pattern</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">pattern</span><span class="p">,</span> <span class="n">primary</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="kc">True</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">primary</span> <span class="o">=</span> <span class="kc">False</span>

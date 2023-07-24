@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="pycivitai.utils" href="../utils/index.html" />
+    <link rel="next" title="pycivitai.config" href="../config/index.html" />
     <link rel="prev" title="pycivitai.client.http" href="http.html" /> 
 </head>
 
@@ -92,7 +92,6 @@
 </ul>
 <p><span class="caption-text">API Documentation</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../config/index.html">pycivitai.config</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">pycivitai.client</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="http.html">pycivitai.client.http</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pycivitai.client.resource</a><ul>
@@ -112,6 +111,9 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../config/index.html">pycivitai.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dispatch/index.html">pycivitai.dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manager/index.html">pycivitai.manager</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../utils/index.html">pycivitai.utils</a></li>
 </ul>
 
@@ -288,7 +290,7 @@
 <h2>find_resource<a class="headerlink" href="#find-resource" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="pycivitai.client.resource.find_resource">
-<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_resource</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_data</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">version_data</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">pattern</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">Ellipsis</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_resource" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_resource</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_data</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">version_data</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">pattern</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_resource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find the specified resource from the model and version data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -326,49 +328,49 @@
 </section>
 <section id="resourcenotfound">
 <h2>ResourceNotFound<a class="headerlink" href="#resourcenotfound" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py exception">
 <dt id="pycivitai.client.resource.ResourceNotFound">
-<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ResourceNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ResourceNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ResourceNotFound" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ResourceNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ResourceNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ResourceNotFound" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="modelnotfound">
 <h2>ModelNotFound<a class="headerlink" href="#modelnotfound" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py exception">
 <dt id="pycivitai.client.resource.ModelNotFound">
-<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelNotFound" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelNotFound" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="modelversionnotfound">
 <h2>ModelVersionNotFound<a class="headerlink" href="#modelversionnotfound" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py exception">
 <dt id="pycivitai.client.resource.ModelVersionNotFound">
-<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelVersionNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelVersionNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelVersionNotFound" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelVersionNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelVersionNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelVersionNotFound" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="resourceduplicated">
 <h2>ResourceDuplicated<a class="headerlink" href="#resourceduplicated" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py exception">
 <dt id="pycivitai.client.resource.ResourceDuplicated">
-<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ResourceDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ResourceDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ResourceDuplicated" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ResourceDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ResourceDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ResourceDuplicated" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="modelversionduplicated">
 <h2>ModelVersionDuplicated<a class="headerlink" href="#modelversionduplicated" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py exception">
 <dt id="pycivitai.client.resource.ModelVersionDuplicated">
-<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelVersionDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelVersionDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelVersionDuplicated" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelVersionDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelVersionDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelVersionDuplicated" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
 <section id="modelfoundduplicated">
 <h2>ModelFoundDuplicated<a class="headerlink" href="#modelfoundduplicated" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
+<dl class="py exception">
 <dt id="pycivitai.client.resource.ModelFoundDuplicated">
-<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelFoundDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelFoundDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelFoundDuplicated" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelFoundDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelFoundDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelFoundDuplicated" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </section>
@@ -383,7 +385,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../utils/index.html" class="btn btn-neutral float-right" title="pycivitai.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../config/index.html" class="btn btn-neutral float-right" title="pycivitai.config" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="http.html" class="btn btn-neutral float-left" title="pycivitai.client.http" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
