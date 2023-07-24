@@ -6,7 +6,6 @@
 ![Comments](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/narugo1992/83ada1e69b66b8f94b0440f27ced4548/raw/comments.json)
 
 [![Code Test](https://github.com/narugo1992/pycivitai/workflows/Code%20Test/badge.svg)](https://github.com/narugo1992/pycivitai/actions?query=workflow%3A%22Code+Test%22)
-[![Data Publish](https://github.com/narugo1992/pycivitai/actions/workflows/data.yml/badge.svg)](https://github.com/narugo1992/pycivitai/actions/workflows/data.yml)
 [![Package Release](https://github.com/narugo1992/pycivitai/workflows/Package%20Release/badge.svg)](https://github.com/narugo1992/pycivitai/actions?query=workflow%3A%22Package+Release%22)
 [![codecov](https://codecov.io/gh/narugo1992/pycivitai/branch/main/graph/badge.svg?token=XJVDP4EFAT)](https://codecov.io/gh/narugo1992/pycivitai)
 
