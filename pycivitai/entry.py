@@ -25,6 +25,22 @@ def cli():
     pass  # pragma: no cover
 
 
+def _get_choices(choices):  # pragma: no cover
+    from InquirerPy import inquirer
+    return inquirer.checkbox(
+        message='Choose model versions to delete:',
+        choices=choices,
+        cycle=False,
+        transformer=lambda result: "%s region%s selected"
+                                   % (len(result), "s" if len(result) > 1 else ""),
+    ).execute()
+
+
+def _confirm(text):  # pragma: no cover
+    from InquirerPy import inquirer
+    return inquirer.confirm(text).execute()
+
+
 @cli.command('delete-cache', context_settings={**GLOBAL_CONTEXT_SETTINGS},
              help='Delete downloaded models from storage.')
 @click.option('-A', '--all', 'delete_all', is_flag=True, type=bool, default=False,
@@ -86,22 +102,15 @@ def delete_cache(delete_all):
                     ])
 
             if choices:
-                versions_to_detect = inquirer.checkbox(
-                    message='Choose model versions to delete:',
-                    choices=choices,
-                    cycle=False,
-                    transformer=lambda result: "%s region%s selected"
-                                               % (len(result), "s" if len(result) > 1 else ""),
-                ).execute()
-
+                versions_to_detect = _get_choices(choices)
                 files_to_delete = sum((x[2] for x in versions_to_detect))
                 size_to_delete = sum((x[3] for x in versions_to_detect))
                 if files_to_delete == 0:
                     click.echo(click.style('Deletion cancelled.', fg='yellow'))
-                elif inquirer.confirm(f'{plural_word(len(versions_to_detect), "version")} with '
-                                      f'{plural_word(files_to_delete, "file")} will be deleted, '
-                                      f'{size_to_bytes_str(size_to_delete, precision=3)} of disk usage '
-                                      f'will be released, confirm?').execute():
+                elif _confirm(f'{plural_word(len(versions_to_detect), "version")} with '
+                              f'{plural_word(files_to_delete, "file")} will be deleted, '
+                              f'{size_to_bytes_str(size_to_delete, precision=3)} of disk usage '
+                              f'will be released, confirm?'):
                     for model_name, version_name, _, _ in versions_to_detect:
                         manager.delete_version(model_name, version_name)
                     click.echo(click.style('Deletion complete!', fg='green'))
