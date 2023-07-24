@@ -19,3 +19,17 @@ if __name__ == '__main__':
     print(civitiai_download('Cetus-Mix', file='*.vae.pt'))  # get the vae file
 
 ```
+
+If you need to delete the local models, just
+
+```shell
+pycivitai delete-cache -A  # download all models
+```
+
+or use the TUI to choose which one to delete
+
+```shell
+pip install pycivitai[cli]  # this step is necessary
+pycivitai delete-cache
+```
+
