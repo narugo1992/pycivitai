@@ -57,7 +57,7 @@ class VersionManager:
     @property
     def _primary_file(self) -> Optional[str]:
         if os.path.exists(self._f_primary):
-            pfile_val = pathlib.Path(self._f_primary).read_text().splitlines(keepends=False)[0]
+            pfile_val = pathlib.Path(self._f_primary).read_text(encoding='utf-8').splitlines(keepends=False)[0]
             return pfile_val if pfile_val else None
         else:
             return None
@@ -87,7 +87,7 @@ class VersionManager:
 
     def _get_file_hash(self, filename: str) -> Optional[str]:
         f = self._hash_path(filename)
-        return pathlib.Path(f).read_text().strip() if os.path.exists(f) else None
+        return pathlib.Path(f).read_text(encoding='utf-8').strip() if os.path.exists(f) else None
 
     def _get_file_meta(self, filename: str) -> Tuple[Optional[str], Optional[int]]:
         return self._get_file_hash(filename), self._get_file_size(filename)
