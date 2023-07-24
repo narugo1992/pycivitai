@@ -9,8 +9,13 @@ from ..testings import get_testfile
 
 
 @pytest.fixture()
-def amiya_v1_0_version_dir():
-    with isolated_directory({'version': get_testfile('amiya_v1_0')}):
+def sample_version_dir():
+    return get_testfile('sample_repo_1', 'amiya_arknights_old__115427', 'v1_0__124870')
+
+
+@pytest.fixture()
+def amiya_v1_0_version_dir(sample_version_dir):
+    with isolated_directory({'version': sample_version_dir}):
         yield 'version'
 
 
@@ -20,8 +25,8 @@ def amiya_v1_0_version_manager(amiya_v1_0_version_dir):
 
 
 @pytest.fixture()
-def amiya_v1_0_version_size_dir():
-    with isolated_directory({'version': get_testfile('amiya_v1_0')}):
+def amiya_v1_0_version_size_dir(sample_version_dir):
+    with isolated_directory({'version': sample_version_dir}):
         with open(os.path.join('version', 'files', 'amiya.pt'), 'w') as f:
             f.write('')
 
@@ -35,8 +40,8 @@ def amiya_v1_0_version_size_manager(amiya_v1_0_version_size_dir):
 
 
 @pytest.fixture()
-def amiya_v1_0_version_np_dir():
-    with isolated_directory({'version': get_testfile('amiya_v1_0')}):
+def amiya_v1_0_version_np_dir(sample_version_dir):
+    with isolated_directory({'version': sample_version_dir}):
         with open(os.path.join('version', 'files', 'amiya.pt'), 'w') as f:
             f.write('')
 
