@@ -1,7 +1,9 @@
 import os
+import shutil
 from typing import Union, Optional, Iterator, Tuple, List
 
 import requests
+from filelock import FileLock
 from hbutils.collection import nested_map
 from hbutils.string import format_tree
 
@@ -27,6 +29,8 @@ class ModelManager:
 
         os.makedirs(root_dir, exist_ok=True)
         self._d_versions = os.path.join(self.root_dir)
+        self._f_lock = os.path.join(self.root_dir, '.filelock')
+        self.lock = FileLock(self._f_lock)
         self._offline = offline
 
     def _get_model(self):
@@ -95,14 +99,25 @@ class ModelManager:
             return VersionManager(version_dir, self.model_name_or_id, version_name, offline=True)
 
     def get_file(self, version: Union[str, int, None] = None, pattern: str = ...):
-        return self._get_version_manager(version).get_file(pattern)
+        with self.lock:
+            return self._get_version_manager(version).get_file(pattern)
 
     def list_versions(self) -> List[VersionManager]:
-        retval = []
-        for version_name, version_id, version_dir in self._list_local_versions():
-            retval.append(VersionManager(version_dir, self.model_name_or_id, version_name, offline=True))
+        with self.lock:
+            retval = []
+            for version_name, version_id, version_dir in self._list_local_versions():
+                retval.append(VersionManager(version_dir, self.model_name_or_id, version_name, offline=True))
 
-        return retval
+            return retval
+
+    @property
+    def total_size(self) -> int:
+        return sum((version.total_size for version in self.list_versions()))
+
+    def delete_version(self, version: Union[str, int, None] = None):
+        with self.lock:
+            version_name, version_id, version_dir = self._find_local_version(version)
+            shutil.rmtree(version_dir, ignore_errors=True)
 
     def _tree(self):
         return self, [item._tree() for item in self.list_versions()]

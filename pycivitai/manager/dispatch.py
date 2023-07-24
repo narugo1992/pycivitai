@@ -1,7 +1,9 @@
 import os
+import shutil
 from typing import Iterator, Tuple, Union, List
 
 import requests
+from filelock import FileLock
 from hbutils.collection import nested_map
 from hbutils.string import format_tree
 
@@ -23,6 +25,8 @@ class DispatchManager:
         self.root_dir = root_dir
 
         os.makedirs(self.root_dir, exist_ok=True)
+        self._f_lock = os.path.join(root_dir, '.filelock')
+        self.lock = FileLock(self._f_lock)
         self._offline = offline
 
     def _model_path(self, model_name: str, model_id: int):
@@ -55,7 +59,7 @@ class DispatchManager:
             model_name, model_id, model_dir = valid_models[0]
             return model_name, model_id, model_dir
 
-    def _get_model_manager(self, model_name_or_id: Union[str, int, None]):
+    def _get_model_manager(self, model_name_or_id: Union[str, int]):
         try:
             if OFFLINE_MODE or self._offline:
                 raise OfflineModeEnabled
@@ -73,16 +77,32 @@ class DispatchManager:
             model_name, model_id, model_dir = self._find_local_model(model_name_or_id)
             return ModelManager(model_dir, model_name_or_id, offline=True)
 
-    def get_file(self, model_name_or_id: Union[str, int, None],
+    def get_file(self, model_name_or_id: Union[str, int],
                  version: Union[str, int, None] = None, pattern: str = ...):
-        return self._get_model_manager(model_name_or_id).get_file(version, pattern)
+        with self.lock:
+            return self._get_model_manager(model_name_or_id).get_file(version, pattern)
 
     def list_models(self) -> List[ModelManager]:
-        retval = []
-        for model_name, model_id, model_dir in self._list_local_models():
-            retval.append(ModelManager(model_dir, model_name, offline=True))
+        with self.lock:
+            retval = []
+            for model_name, model_id, model_dir in self._list_local_models():
+                retval.append(ModelManager(model_dir, model_name, offline=True))
 
-        return retval
+            return retval
+
+    @property
+    def total_size(self) -> int:
+        with self.lock:
+            return sum((model.total_size for model in self.list_models()))
+
+    def delete_model(self, model_name_or_id: Union[str, int]):
+        with self.lock:
+            model_name, model_id, model_dir = self._find_local_model(model_name_or_id)
+            shutil.rmtree(model_dir, ignore_errors=True)
+
+    def delete_version(self, model_name_or_id: Union[str, int], version: Union[str, int]):
+        with self.lock:
+            self._get_model_manager(model_name_or_id).delete_version(version)
 
     def _repr(self):
         return f'<{self.__class__.__name__} directory: {self.root_dir!r}>'

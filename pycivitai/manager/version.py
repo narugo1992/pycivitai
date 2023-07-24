@@ -187,6 +187,23 @@ class VersionManager:
 
             return retval
 
+    @property
+    def total_size(self) -> int:
+        with self.lock:
+            return sum((file.size for file in self.list_files()))
+
+    def delete_file(self, filename):
+        with self.lock:
+            fp = self._file_path(filename)
+            hp = self._hash_path(filename)
+            if not os.path.exists(fp) and not os.path.exists(hp):
+                raise LocalFileNotFound(self.model_name_or_id, self.version, filename)
+            else:
+                if os.path.exists(fp):
+                    os.remove(fp)
+                if os.path.exists(hp):
+                    os.remove(hp)
+
     def _repr(self):
         return f'<{self.__class__.__name__} model: {self.model_name_or_id!r}, version: {self.version!r}>'
 
