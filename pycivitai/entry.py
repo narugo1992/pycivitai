@@ -65,15 +65,17 @@ def delete_cache(delete_all):
                     version_dir = version.root_dir
                     version_name, version_id = os.path.basename(version_dir).split('__')
                     files = version.list_files()
-                    model_files += len(files)
                     total_size = sum([file.size for file in files])
-                    model_total_size += total_size
-                    model_choices.append(Choice(
-                        (model.model_name_or_id, version.version, len(files), total_size),
-                        name=f'{version_name}(ID: {version_id}, {plural_word(len(files), "file")}, '
-                             f'size: {size_to_bytes_str(total_size, precision=3)})',
-                        enabled=False
-                    ))
+
+                    if len(files) > 0:
+                        model_files += len(files)
+                        model_total_size += total_size
+                        model_choices.append(Choice(
+                            (model.model_name_or_id, version.version, len(files), total_size),
+                            name=f'{version_name}(ID: {version_id}, {plural_word(len(files), "file")}, '
+                                 f'size: {size_to_bytes_str(total_size, precision=3)})',
+                            enabled=False
+                        ))
 
                 if model_choices:
                     choices.extend([

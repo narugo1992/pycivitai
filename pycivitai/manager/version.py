@@ -100,12 +100,13 @@ class VersionManager:
             return (resource.size != local_size) or (resource.sha256 != local_hash)
 
     def _iter_local_files(self) -> Iterator[Tuple[str, str, int]]:
-        for f in os.listdir(self._d_files):
-            _hash, _size = self._get_file_meta(f)
-            if not _hash or _size is None:
-                continue
+        if os.path.exists(self._d_files):
+            for f in os.listdir(self._d_files):
+                _hash, _size = self._get_file_meta(f)
+                if not _hash or _size is None:
+                    continue
 
-            yield f, _hash, _size
+                yield f, _hash, _size
 
     def _download_resource(self, resource: Resource):
         with TemporaryDirectory() as td:
@@ -162,10 +163,11 @@ class VersionManager:
                 fullmatch = False
 
             matched_files = []
-            for filename in os.listdir(self._d_files):
-                if (fullmatch and filename == pattern) or \
-                        (not fullmatch and fnmatch.fnmatch(filename, pattern)):
-                    matched_files.append(filename)
+            if os.path.exists(self._d_files):
+                for filename in os.listdir(self._d_files):
+                    if (fullmatch and filename == pattern) or \
+                            (not fullmatch and fnmatch.fnmatch(filename, pattern)):
+                        matched_files.append(filename)
 
             if not matched_files:
                 raise LocalFileNotFound(self.model_name_or_id, self.version)
