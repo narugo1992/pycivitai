@@ -110,7 +110,7 @@ class ModelManager:
             version_name, version_id, version_dir = self._find_local_version(version)
             return VersionManager(version_dir, self.model_name_or_id, version_name, offline=True)
 
-    def get_file(self, version: Union[str, int, None] = None, pattern: str = ...):
+    def get_file(self, version: Union[str, int, None] = None, pattern: str = None):
         """
         Get the local file path of the specified model file.
 

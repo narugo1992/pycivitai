@@ -88,7 +88,7 @@ class VersionManager:
             self._version_data = find_version(self._get_model(), self.version)
         return self._version_data
 
-    def _get_resource(self, pattern: str = ...) -> Resource:
+    def _get_resource(self, pattern: str = None) -> Resource:
         return find_resource(self._get_model(), self._get_version(), pattern)
 
     def _file_path(self, filename: str):
@@ -144,7 +144,7 @@ class VersionManager:
                 with open(self._f_primary, 'w', encoding='utf-8') as pf:
                     pf.write(resource.filename)
 
-    def _try_sync_from_site(self, pattern: str = ...):
+    def _try_sync_from_site(self, pattern: str = None):
         try:
             if OFFLINE_MODE or self._offline:
                 raise OfflineModeEnabled
@@ -166,7 +166,7 @@ class VersionManager:
             # ignore this, use the local models
             logging.debug('Offline environment detected, using locally downloaded resources.')
 
-    def get_file(self, pattern: str = ...):
+    def get_file(self, pattern: str = None):
         """
         Get the local file path of the specified model file.
 
@@ -181,7 +181,7 @@ class VersionManager:
         with self.lock:
             self._try_sync_from_site(pattern)
 
-            if pattern is ...:
+            if pattern is None:
                 pattern = self._primary_file
                 fullmatch = True
                 if pattern is None:

@@ -88,7 +88,7 @@ class DispatchManager:
             return ModelManager(model_dir, model_name_or_id, offline=True)
 
     def get_file(self, model_name_or_id: Union[str, int],
-                 version: Union[str, int, None] = None, pattern: str = ...):
+                 version: Union[str, int, None] = None, pattern: str = None):
         """
         Get the local file path of the specified model file.
 

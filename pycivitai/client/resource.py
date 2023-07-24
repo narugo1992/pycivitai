@@ -152,7 +152,7 @@ def find_version(model_data: dict, version: Union[int, str, None] = None):
     return select_version
 
 
-def find_resource(model_data: dict, version_data: dict, pattern: str = ...):
+def find_resource(model_data: dict, version_data: dict, pattern: str = None):
     """
     Find the specified resource from the model and version data.
 
@@ -169,7 +169,7 @@ def find_resource(model_data: dict, version_data: dict, pattern: str = ...):
     :raises ResourceDuplicated: If multiple resources with the same name are found.
     """
     # find chosen resource
-    if pattern is ...:
+    if pattern is None:
         pattern, primary = '*', True
     elif isinstance(pattern, str):
         primary = False

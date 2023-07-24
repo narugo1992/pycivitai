@@ -21,8 +21,9 @@ The `pycivitai` framework provides a user-friendly set of resources for mirrorin
     :maxdepth: 2
     :caption: API Documentation
 
-    api_doc/config/index
     api_doc/client/index
+    api_doc/config/index
+    api_doc/dispatch/index
     api_doc/manager/index
     api_doc/utils/index
 
