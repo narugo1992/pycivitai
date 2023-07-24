@@ -56,3 +56,7 @@ def start_http_server_to_testfile(port: Optional[int] = None, silent: bool = Tru
     port = port or get_free_port(strict=False)
     with start_http_server(TESTFILE_DIR, port, silent) as url:
         yield url
+
+
+def get_testfile(*segs):
+    return os.path.join(TESTFILE_DIR, *segs)
