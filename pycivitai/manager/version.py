@@ -210,7 +210,7 @@ class VersionManager:
         return f'<{self.__class__.__name__} model: {self.model_name_or_id!r}, version: {self.version!r}>'
 
     def _tree(self):
-        return self, [(item, []) for item in self.list_files()]
+        return self, [(item, []) for item in sorted(self.list_files(), key=repr)]
 
     def __str__(self):
         return format_tree(

@@ -120,7 +120,7 @@ class ModelManager:
             shutil.rmtree(version_dir, ignore_errors=True)
 
     def _tree(self):
-        return self, [item._tree() for item in self.list_versions()]
+        return self, [item._tree() for item in sorted(self.list_versions(), key=repr)]
 
     def _repr(self):
         return f'<{self.__class__.__name__} model: {self.model_name_or_id!r}>'

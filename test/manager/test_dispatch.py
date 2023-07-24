@@ -79,14 +79,14 @@ class TestManagerDispatch:
         text_aligner.assert_equal(
             """
 <DispatchManager directory: 'repo'>
-├── <ModelManager model: '明日方舟_安洁莉娜_arknights_angeline'>
-│   └── <VersionManager model: '明日方舟_安洁莉娜_arknights_angeline', version: 'v1_0'>
-│       └── LocalFile(filename='安洁莉娜5(头巾headband,三套衣服coat,multiple strap,swimsuit),.safetensors', hash='89A4D7CF20C76AFEE5AA4C4F28908A05D5E6BB6EB7726E5D319DE74731D09701', size=37863532, is_primary=True)
-└── <ModelManager model: 'amiya_arknights_old'>
-    ├── <VersionManager model: 'amiya_arknights_old', version: 'v1_0'>
-    │   └── LocalFile(filename='amiya.pt', hash='259BE5CF344CDBCA981B389BE7C105B8993D9D340C172C556F2E0E8283E3DBED', size=25451, is_primary=True)
-    └── <VersionManager model: 'amiya_arknights_old', version: 'v1_1'>
-        └── LocalFile(filename='amiya.pt', hash='311279B35743D703DED68DF6ECC9F1E850A9F6976494CC8AF434DF3AA0E238A0', size=25515, is_primary=True)
+├── <ModelManager model: 'amiya_arknights_old'>
+│   ├── <VersionManager model: 'amiya_arknights_old', version: 'v1_0'>
+│   │   └── LocalFile(filename='amiya.pt', hash='259BE5CF344CDBCA981B389BE7C105B8993D9D340C172C556F2E0E8283E3DBED', size=25451, is_primary=True)
+│   └── <VersionManager model: 'amiya_arknights_old', version: 'v1_1'>
+│       └── LocalFile(filename='amiya.pt', hash='311279B35743D703DED68DF6ECC9F1E850A9F6976494CC8AF434DF3AA0E238A0', size=25515, is_primary=True)
+└── <ModelManager model: '明日方舟_安洁莉娜_arknights_angeline'>
+    └── <VersionManager model: '明日方舟_安洁莉娜_arknights_angeline', version: 'v1_0'>
+        └── LocalFile(filename='安洁莉娜5(头巾headband,三套衣服coat,multiple strap,swimsuit),.safetensors', hash='89A4D7CF20C76AFEE5AA4C4F28908A05D5E6BB6EB7726E5D319DE74731D09701', size=37863532, is_primary=True)
             """,
             str(repo_manager),
         )
@@ -96,12 +96,12 @@ class TestManagerDispatch:
         text_aligner.assert_equal(
             """
 <DispatchManager directory: 'repo'>
-├── <ModelManager model: '明日方舟_安洁莉娜_arknights_angeline'>
-│   └── <VersionManager model: '明日方舟_安洁莉娜_arknights_angeline', version: 'v1_0'>
-│       └── LocalFile(filename='安洁莉娜5(头巾headband,三套衣服coat,multiple strap,swimsuit),.safetensors', hash='89A4D7CF20C76AFEE5AA4C4F28908A05D5E6BB6EB7726E5D319DE74731D09701', size=37863532, is_primary=True)
-└── <ModelManager model: 'amiya_arknights_old'>
-    └── <VersionManager model: 'amiya_arknights_old', version: 'v1_1'>
-        └── LocalFile(filename='amiya.pt', hash='311279B35743D703DED68DF6ECC9F1E850A9F6976494CC8AF434DF3AA0E238A0', size=25515, is_primary=True)
+├── <ModelManager model: 'amiya_arknights_old'>
+│   └── <VersionManager model: 'amiya_arknights_old', version: 'v1_1'>
+│       └── LocalFile(filename='amiya.pt', hash='311279B35743D703DED68DF6ECC9F1E850A9F6976494CC8AF434DF3AA0E238A0', size=25515, is_primary=True)
+└── <ModelManager model: '明日方舟_安洁莉娜_arknights_angeline'>
+    └── <VersionManager model: '明日方舟_安洁莉娜_arknights_angeline', version: 'v1_0'>
+        └── LocalFile(filename='安洁莉娜5(头巾headband,三套衣服coat,multiple strap,swimsuit),.safetensors', hash='89A4D7CF20C76AFEE5AA4C4F28908A05D5E6BB6EB7726E5D319DE74731D09701', size=37863532, is_primary=True)
             """,
             str(repo_manager),
         )

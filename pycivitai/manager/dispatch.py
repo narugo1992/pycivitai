@@ -108,7 +108,7 @@ class DispatchManager:
         return f'<{self.__class__.__name__} directory: {self.root_dir!r}>'
 
     def _tree(self):
-        return self, [item._tree() for item in self.list_models()]
+        return self, [item._tree() for item in sorted(self.list_models(), key=repr)]
 
     def __str__(self):
         return format_tree(
