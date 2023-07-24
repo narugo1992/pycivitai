@@ -22,6 +22,7 @@ The `pycivitai` framework provides a user-friendly set of resources for mirrorin
     :caption: API Documentation
 
     api_doc/config/index
+    api_doc/client/index
 
 
 .. toctree::
