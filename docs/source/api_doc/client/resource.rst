@@ -46,37 +46,37 @@ Resource
 ResourceNotFound
 -------------------------------------------
 
-.. autoclass:: ResourceNotFound
+.. autoexception:: ResourceNotFound
 
 
 ModelNotFound
 -------------------------------------------
 
-.. autoclass:: ModelNotFound
+.. autoexception:: ModelNotFound
 
 
 ModelVersionNotFound
 -------------------------------------------
 
-.. autoclass:: ModelVersionNotFound
+.. autoexception:: ModelVersionNotFound
 
 
 ResourceDuplicated
 -------------------------------------------
 
-.. autoclass:: ResourceDuplicated
+.. autoexception:: ResourceDuplicated
 
 
 ModelVersionDuplicated
 -------------------------------------------
 
-.. autoclass:: ModelVersionDuplicated
+.. autoexception:: ModelVersionDuplicated
 
 
 ModelFoundDuplicated
 -------------------------------------------
 
-.. autoclass:: ModelFoundDuplicated
+.. autoexception:: ModelFoundDuplicated
 
 
 

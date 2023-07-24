@@ -21,7 +21,17 @@ class LocalModelDuplicated(Exception):
 
 
 class DispatchManager:
+    """
+    Management of all models.
+    """
+
     def __init__(self, root_dir: str, offline: bool = False):
+        """
+        Manages multiple models and their versions downloaded from civitai.com.
+
+        :param root_dir: The root directory where the models will be managed.
+        :param offline: If True, the manager operates in offline mode, using locally downloaded resources.
+        """
         self.root_dir = root_dir
 
         os.makedirs(self.root_dir, exist_ok=True)
@@ -79,10 +89,30 @@ class DispatchManager:
 
     def get_file(self, model_name_or_id: Union[str, int],
                  version: Union[str, int, None] = None, pattern: str = ...):
+        """
+        Get the local file path of the specified model file.
+
+        :param model_name_or_id: The name or ID of the model to manage.
+        :type model_name_or_id: Union[str, int]
+        :param version: The version ID or name of the model version. If None, the latest version is used.
+        :type version: Union[str, int, None]
+        :param pattern: The pattern or name of the file to get. If None, the primary file will be returned.
+        :type pattern: str
+        :return: The local path of the specified model file.
+        :rtype: str
+        :raises LocalModelNotFound: If the specified model is not found locally.
+        :raises LocalModelDuplicated: If multiple models matching the model_name_or_id are found locally.
+        """
         with self.lock:
             return self._get_model_manager(model_name_or_id).get_file(version, pattern)
 
     def list_models(self) -> List[ModelManager]:
+        """
+        List all the local models managed by this DispatchManager.
+
+        :return: A list of ModelManager objects, one for each model.
+        :rtype: List[ModelManager]
+        """
         with self.lock:
             retval = []
             for model_name, model_id, model_dir in self._list_local_models():
@@ -92,15 +122,36 @@ class DispatchManager:
 
     @property
     def total_size(self) -> int:
+        """
+        Get the total size of all the local model files managed by this DispatchManager.
+
+        :return: The total size in bytes.
+        :rtype: int
+        """
         with self.lock:
             return sum((model.total_size for model in self.list_models()))
 
     def delete_model(self, model_name_or_id: Union[str, int]):
+        """
+        Delete the specified model and all its versions from the local storage.
+
+        :param model_name_or_id: The name or ID of the model to delete.
+        :type model_name_or_id: Union[str, int]
+        :raises LocalModelNotFound: If the specified model is not found locally.
+        """
         with self.lock:
             model_name, model_id, model_dir = self._find_local_model(model_name_or_id)
             shutil.rmtree(model_dir, ignore_errors=True)
 
     def delete_version(self, model_name_or_id: Union[str, int], version: Union[str, int]):
+        """
+        Delete the specified version of the model from the local storage.
+
+        :param model_name_or_id: The name or ID of the model.
+        :type model_name_or_id: Union[str, int]
+        :param version: The version ID or name to delete.
+        :type version: Union[str, int]
+        """
         with self.lock:
             self._get_model_manager(model_name_or_id).delete_version(version)
 

@@ -31,6 +31,9 @@ class LocalFileDuplicated(Exception):
 
 @dataclass
 class LocalFile:
+    """
+    Data class of local managed file.
+    """
     filename: str
     hash: str
     size: int
@@ -38,8 +41,21 @@ class LocalFile:
 
 
 class VersionManager:
+    """
+    Management of specific version of model.
+    """
+
     def __init__(self, root_dir: str, model_name_or_id: Union[str, int], version: Union[str, int],
                  model_data: Optional[dict] = None, offline: bool = False):
+        """
+        Manages the local model files downloaded from civitai.com for a specific model and version.
+
+        :param root_dir: The root directory where the model files will be managed.
+        :param model_name_or_id: The name or ID of the model to manage files for.
+        :param version: The version ID or name to manage files for.
+        :param model_data: Optional dictionary containing model information to avoid fetching it from the API.
+        :param offline: If True, the manager operates in offline mode, using locally downloaded resources.
+        """
         self.root_dir = root_dir
         self.model_name_or_id = model_name_or_id
         self._model_data = model_data
@@ -151,6 +167,17 @@ class VersionManager:
             logging.debug('Offline environment detected, using locally downloaded resources.')
 
     def get_file(self, pattern: str = ...):
+        """
+        Get the local file path of the specified model file.
+
+        :param pattern: The pattern or name of the file to get. If None, the primary file will be returned.
+        :type pattern: str
+        :return: The local path of the specified model file.
+        :rtype: str
+        :raises LocalPrimaryFileUnset: If the primary file is not set and no specific pattern is provided.
+        :raises LocalFileNotFound: If the specified file is not found locally.
+        :raises LocalFileDuplicated: If multiple files matching the pattern are found locally.
+        """
         with self.lock:
             self._try_sync_from_site(pattern)
 
@@ -181,6 +208,12 @@ class VersionManager:
                 return local_file
 
     def list_files(self) -> List[LocalFile]:
+        """
+        List all the local model files associated with this version manager.
+
+        :return: A list of LocalFile objects containing information about each local model file.
+        :rtype: List[LocalFile]
+        """
         with self.lock:
             retval = []
             primary_file = self._primary_file
@@ -191,10 +224,23 @@ class VersionManager:
 
     @property
     def total_size(self) -> int:
+        """
+        Get the total size of all the local model files associated with this version manager.
+
+        :return: The total size in bytes.
+        :rtype: int
+        """
         with self.lock:
             return sum((file.size for file in self.list_files()))
 
     def delete_file(self, filename):
+        """
+        Delete the specified model file from the local storage.
+
+        :param filename: The name of the file to delete.
+        :type filename: str
+        :raises LocalFileNotFound: If the specified file is not found locally.
+        """
         with self.lock:
             fp = self._file_path(filename)
             hp = self._hash_path(filename)

@@ -21,8 +21,20 @@ class LocalVersionDuplicated(Exception):
 
 
 class ModelManager:
+    """
+    Management of specific model.
+    """
+
     def __init__(self, root_dir: str, model_name_or_id: Union[str, int],
                  model_data: Optional[dict] = None, offline: bool = False):
+        """
+        Manages multiple versions of a model downloaded from civitai.com.
+
+        :param root_dir: The root directory where the model versions will be managed.
+        :param model_name_or_id: The name or ID of the model to manage.
+        :param model_data: Optional dictionary containing model information to avoid fetching it from the API.
+        :param offline: If True, the manager operates in offline mode, using locally downloaded resources.
+        """
         self.root_dir = root_dir
         self.model_name_or_id = model_name_or_id
         self._model_data = model_data
@@ -99,10 +111,28 @@ class ModelManager:
             return VersionManager(version_dir, self.model_name_or_id, version_name, offline=True)
 
     def get_file(self, version: Union[str, int, None] = None, pattern: str = ...):
+        """
+        Get the local file path of the specified model file.
+
+        :param version: The version ID or name of the model version. If None, the latest version is used.
+        :type version: Union[str, int, None]
+        :param pattern: The pattern or name of the file to get. If None, the primary file will be returned.
+        :type pattern: str
+        :return: The local path of the specified model file.
+        :rtype: str
+        :raises LocalVersionNotFound: If the specified version is not found locally.
+        :raises LocalVersionDuplicated: If multiple versions matching the version parameter are found locally.
+        """
         with self.lock:
             return self._get_version_manager(version).get_file(pattern)
 
     def list_versions(self) -> List[VersionManager]:
+        """
+        List all the local model versions managed by this ModelManager.
+
+        :return: A list of VersionManager objects, one for each version.
+        :rtype: List[VersionManager]
+        """
         with self.lock:
             retval = []
             for version_name, version_id, version_dir in self._list_local_versions():
@@ -112,9 +142,22 @@ class ModelManager:
 
     @property
     def total_size(self) -> int:
+        """
+        Get the total size of all the local model files managed by this ModelManager.
+
+        :return: The total size in bytes.
+        :rtype: int
+        """
         return sum((version.total_size for version in self.list_versions()))
 
     def delete_version(self, version: Union[str, int, None] = None):
+        """
+        Delete the specified model version from the local storage.
+
+        :param version: The version ID or name to delete. If None, the latest version is deleted.
+        :type version: Union[str, int, None]
+        :raises LocalVersionNotFound: If the specified version is not found locally.
+        """
         with self.lock:
             version_name, version_id, version_dir = self._find_local_version(version)
             shutil.rmtree(version_dir, ignore_errors=True)
