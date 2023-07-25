@@ -6,7 +6,7 @@ import click
 from hbutils.scale import size_to_bytes_str
 from hbutils.string import plural_word
 
-from .dispatch import _get_global_manager
+from .dispatch import _get_global_manager, civitai_download
 from .utils import GLOBAL_CONTEXT_SETTINGS
 from .utils import print_version as _origin_print_version
 
@@ -14,6 +14,15 @@ try:
     import InquirerPy
 except (ModuleNotFoundError, ImportError):
     InquirerPy = None
+
+
+def _check_inquirerpy():
+    if InquirerPy is None:
+        raise OSError(
+            'TUI for models deletion not available, '
+            'please install CLI extra with `pip install pycivitiai[cli]`.'
+        )
+
 
 print_version = partial(_origin_print_version, 'pycivitai')
 
@@ -60,11 +69,7 @@ def delete_cache(delete_all):
             click.echo(f'All models deleted, total {size_to_bytes_str(total_size, precision=3)}.')
 
         else:
-            if InquirerPy is None:
-                raise OSError(
-                    'TUI for models deletion not available, '
-                    'please install CLI extra with `pip install pycivitiai[cli]`.'
-                )
+            _check_inquirerpy()
 
             from InquirerPy import inquirer
             from InquirerPy.base import Choice
@@ -117,3 +122,17 @@ def delete_cache(delete_all):
 
             else:
                 click.echo(click.style('No models found to delete.', fg='yellow'))
+
+
+@cli.command('get', context_settings={**GLOBAL_CONTEXT_SETTINGS},
+             help='Delete downloaded models from storage.')
+@click.option('--model', '-m', 'model', type=str, required=True,
+              help='Title or id of the model.')
+@click.option('--version', '-v', 'version', type=str, default=None,
+              help='Name or id of the version. Latest version will be used when not given.', show_default=True)
+@click.option('--file', '-f', 'file', type=str, default=None,
+              help='Name pattern of the model file. Primary file will be used when not given', show_default=True)
+@click.option('--offline', 'offline', is_flag=True, type=bool, default=False,
+              help='Offline mode. Default is disabled.', show_default=True)
+def get_(model, version, file, offline):
+    click.echo(civitai_download(model, version, file, offline))

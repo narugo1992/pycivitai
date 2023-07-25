@@ -27,7 +27,8 @@ def sample_repo(sample_repo_dir):
         def _get_manager(offline):
             return DispatchManager('repo', offline)
 
-        with patch('pycivitai.entry._get_global_manager', _get_manager):
+        with patch('pycivitai.entry._get_global_manager', _get_manager), \
+                patch('pycivitai.dispatch._get_global_manager', _get_manager):
             yield DispatchManager('repo', offline=True)
 
 
@@ -39,7 +40,8 @@ def empty_repo():
         def _get_manager(offline):
             return DispatchManager('repo', offline)
 
-        with patch('pycivitai.entry._get_global_manager', _get_manager):
+        with patch('pycivitai.entry._get_global_manager', _get_manager), \
+                patch('pycivitai.dispatch._get_global_manager', _get_manager):
             yield DispatchManager('repo', offline=True)
 
 
@@ -126,3 +128,27 @@ class TestEntry:
                 result.stdout,
             )
         assert sample_repo.total_size == 25451
+
+    def test_get(self, sample_repo):
+        result = simulate_entry(cli, ['cli', 'get', '-m', 'amiya arknights (old)'])
+        assert result.exitcode == 0
+        assert os.path.samefile(
+            result.stdout.strip(),
+            os.path.join('repo', 'amiya_arknights_old__115427', 'v1_1__124885', 'files', 'amiya.pt'),
+        )
+
+    def test_get_offline(self, sample_repo):
+        result = simulate_entry(cli, ['cli', 'get', '-m', 'amiya arknights (old)', '--offline'])
+        assert result.exitcode == 0
+        assert os.path.samefile(
+            result.stdout.strip(),
+            os.path.join('repo', 'amiya_arknights_old__115427', 'v1_0__124870', 'files', 'amiya.pt'),
+        )
+
+    def test_get_specific_version(self, sample_repo):
+        result = simulate_entry(cli, ['cli', 'get', '-m', 'amiya arknights (old)', '-v', 'v1.0'])
+        assert result.exitcode == 0
+        assert os.path.samefile(
+            result.stdout.strip(),
+            os.path.join('repo', 'amiya_arknights_old__115427', 'v1_0__124870', 'files', 'amiya.pt'),
+        )
