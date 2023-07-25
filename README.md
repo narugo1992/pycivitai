@@ -67,6 +67,16 @@ if __name__ == '__main__':
 
 ```
 
+If you are using command line, you can get the models with the following commands
+
+```shell
+pycivitai get -m 'DEN_barbucci_artstyle'           # get model, use primary file of the latest version
+pycivitai get -m 'DEN_barbucci_artstyle' -v 'v1.0' # get model, use primary file the v1.0 version
+pycivitai get -m 'Cetus-Mix'                       # get the safetensors file of Cetus-Mix
+pycivitai get -m 'Cetus-Mix' -f '*.vae.pt'         # get the vae file of Cetus-Mix
+
+```
+
 ### Get Information of Model Resource
 
 If you only need to obtain information about the model's resource files, for example, if you need to download the files
