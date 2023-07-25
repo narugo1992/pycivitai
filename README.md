@@ -18,27 +18,83 @@
 [![Contributors](https://img.shields.io/github/contributors/narugo1992/pycivitai)](https://github.com/narugo1992/pycivitai/graphs/contributors)
 [![GitHub license](https://img.shields.io/github/license/narugo1992/pycivitai)](https://github.com/narugo1992/pycivitai/blob/master/LICENSE)
 
-Python Client and Model Management for civitai
+Python Client and Model Management for civitai,
 
-Here is an example:
+The design was inspired by [huggingface/huggingface_hub](https://github.com/huggingface/huggingface_hub), implementing
+automatic management of downloaded models locally, and automatically detecting file changes and the latest versions.
+
+## Installation
+
+You can install `pycivitai` with pip
+
+```shell
+pip install pycivitai
+```
+
+If you need TUI for manually deleting downloaded models, just install like this
+
+```shell
+pip install pycivitai[cli]
+```
+
+## Quick Start
+
+### Use Model From CivitAI
+
+`pycivitai` follows a similar usage pattern as the `huggingface_hub`, as shown below:
 
 ```python
-from pycivitai.dispatch import civitai_download
+from pycivitai import civitai_download
 
 if __name__ == '__main__':
     # get the latest version of DEN_barbucci_artstyle (either model title or id is okay)
+    # Homepage of this model: https://civitai.com/models/85716
+    # the return value of civitai_download is the path of downloaded file you need
     print(civitai_download('DEN_barbucci_artstyle'))
+
+    # get the same model (DEN_barbucci_artstyle) with model id
+    print(civitai_download(85716))
 
     # get the specific version (either version name of id is okay)
     print(civitai_download('DEN_barbucci_artstyle', version='v1.0'))
+    print(civitai_download('DEN_barbucci_artstyle', 91158))
 
-    # get the primary file of this model (it contains a ckpt and a vae, the ckpt is primary)
-    print(civitai_download('Cetus-Mix'))  # the ckpt file
+    # This is a model with multiple files inside.
+    # It contains a safetensors and a vae, the safetensors is primary.
+    # Homepage of this model: https://civitai.com/models/6755/cetus-mix
+    print(civitai_download('Cetus-Mix'))  # the safetensors file (when file not specified, primary file will be chosen)
     print(civitai_download('Cetus-Mix', file='*.vae.pt'))  # get the vae file
 
 ```
 
-If you need to delete the local models, just
+### Get Information of Model Resource
+
+If you only need to obtain information about the model's resource files, for example, if you need to download the files
+yourself, you can use the `civitai_find_online` function, which will return a `Resource` object.
+
+```python
+from pycivitai import civitai_find_online, Resource
+
+if __name__ == '__main__':
+    # get resource of this model file, arguments are the same as `civitai_download`
+    resource: Resource = civitai_find_online('DEN_barbucci_artstyle')
+
+    # information of this resource
+    print(resource.model_name)
+    print(resource.model_id)
+    print(resource.version_name)
+    print(resource.version_id)
+    print(resource.filename)
+    print(resource.url)
+    print(resource.size)
+    print(resource.sha256)
+    print(resource.is_primary)
+
+```
+
+### Clear the Downloaded Models
+
+If you need to delete all the local models, just
 
 ```shell
 pycivitai delete-cache -A  # download all models
@@ -50,4 +106,45 @@ or use the TUI to choose which one to delete
 pip install pycivitai[cli]  # this step is necessary
 pycivitai delete-cache
 ```
+
+## F.A.Q.
+
+### Where will the downloaded model be saved?
+
+The downloaded model will be saved by default in the `~/.cache/civitai` directory. If you need to change the save path,
+you can set the value of the `CIVITAI_HOME` environment variable to your desired save path.
+
+### How are downloaded models managed?
+
+After downloading, the models are managed using the file system, and file locks are set to ensure thread safety during
+reading and writing. The structure is similar to the following:
+
+```
+~/.cache/civitai
+├── cetus_mix__6755
+│   └── cetusmix_whalefall2__105924
+│       ├── files
+│       │   ├── cetusMix_Whalefall2.safetensors
+│       │   └── vae-ft-mse-840000-ema-pruned.vae.pt
+│       ├── hashes
+│       │   ├── cetusMix_Whalefall2.safetensors.hash
+│       │   └── vae-ft-mse-840000-ema-pruned.vae.pt.hash
+│       └── primary
+└── den_barbucci_artstyle__85716
+    ├── v1_0__91158
+    │   ├── files
+    │   │   └── DEN_barbucci_artstyle.pt
+    │   ├── hashes
+    │   │   └── DEN_barbucci_artstyle.pt.hash
+    │   └── primary
+    └── v2_0__113049
+        ├── files
+        │   └── DEN_barbucci_styleMK2.pt
+        ├── hashes
+        │   └── DEN_barbucci_styleMK2.pt.hash
+        └── primary
+```
+
+This structure does not have any additional dependencies. Therefore, when it is necessary to migrate the storage path,
+you can simply move it and modify the environment variable `CIVITAI_HOME`.
 
