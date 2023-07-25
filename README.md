@@ -107,6 +107,18 @@ pip install pycivitai[cli]  # this step is necessary
 pycivitai delete-cache
 ```
 
+TUI is like this, build with [InquirerPy](https://github.com/kazhala/InquirerPy):
+
+```
+? Choose model versions to delete:
+  Model cetus_mix(ID: 6755, 2 files, size: 3.899 GiB):
+❯ ○ cetusmix_whalefall2(ID: 105924, 2 files, size: 3.899 GiB)
+
+  Model den_barbucci_artstyle(ID: 85716, 2 files, size: 17.181 KiB):
+  ○ v1_0(ID: 91158, 1 file, size: 7.160 KiB)
+  ○ v2_0(ID: 113049, 1 file, size: 10.021 KiB)
+```
+
 ## F.A.Q.
 
 ### Where will the downloaded model be saved?
