@@ -170,3 +170,11 @@ reading and writing. The structure is similar to the following:
 This structure does not have any additional dependencies. Therefore, when it is necessary to migrate the storage path,
 you can simply move it and modify the environment variable `CIVITAI_HOME`.
 
+### What happens when in an offline environment?
+
+When a network anomaly or an offline environment is detected (such as connection errors or timeouts), the library will
+attempt to find a suitable model from the locally downloaded models to provide to the user. If no locally available
+model is found, an exception will be raised.
+
+Additionally, if you are in a clearly offline environment and using pre-downloaded models, you can set the value of
+the `CIVITAI_OFFLINE` environment variable to avoid attempts for network access.
