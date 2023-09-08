@@ -78,7 +78,7 @@ def delete_cache(delete_all):
             choices = []
             for model in manager.list_models():
                 model_dir = model.root_dir
-                model_name, model_id = os.path.basename(model_dir).split('__')
+                model_name, model_creator, model_id = os.path.basename(model_dir).split('__')
 
                 model_total_size, model_files = 0, 0
                 model_choices = []
@@ -128,11 +128,13 @@ def delete_cache(delete_all):
              help='Delete downloaded models from storage.')
 @click.option('--model', '-m', 'model', type=str, required=True,
               help='Title or id of the model.')
+@click.option('--creator', '-c', 'creator', type=str, default=None,
+              help='Creator of the model.', show_default=True)
 @click.option('--version', '-v', 'version', type=str, default=None,
               help='Name or id of the version. Latest version will be used when not given.', show_default=True)
 @click.option('--file', '-f', 'file', type=str, default=None,
               help='Name pattern of the model file. Primary file will be used when not given', show_default=True)
 @click.option('--offline', 'offline', is_flag=True, type=bool, default=False,
               help='Offline mode. Default is disabled.', show_default=True)
-def get_(model, version, file, offline):
-    click.echo(civitai_download(model, version, file, offline))
+def get_(model, creator, version, file, offline):
+    click.echo(civitai_download(model, creator, version, file, offline))

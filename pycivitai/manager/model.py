@@ -25,18 +25,20 @@ class ModelManager:
     Management of specific model.
     """
 
-    def __init__(self, root_dir: str, model_name_or_id: Union[str, int],
+    def __init__(self, root_dir: str, model_name_or_id: Union[str, int], creator: Optional[str] = None,
                  model_data: Optional[dict] = None, offline: bool = False):
         """
         Manages multiple versions of a model downloaded from civitai.com.
 
         :param root_dir: The root directory where the model versions will be managed.
         :param model_name_or_id: The name or ID of the model to manage.
+        :param creator: Name of creator. ``None`` means anyone.
         :param model_data: Optional dictionary containing model information to avoid fetching it from the API.
         :param offline: If True, the manager operates in offline mode, using locally downloaded resources.
         """
         self.root_dir = root_dir
         self.model_name_or_id = model_name_or_id
+        self.creator = creator
         self._model_data = model_data
 
         os.makedirs(root_dir, exist_ok=True)
@@ -47,7 +49,7 @@ class ModelManager:
 
     def _get_model(self):
         if not self._model_data:
-            self._model_data = find_model(self.model_name_or_id)
+            self._model_data = find_model(self.model_name_or_id, self.creator)
         return self._model_data
 
     def _version_path(self, version_name: str, version_id: int):
@@ -95,7 +97,7 @@ class ModelManager:
 
             version_name, version_id, version_dir = self._find_online_version(version)
             return VersionManager(
-                version_dir, self.model_name_or_id, version_name,
+                version_dir, self.model_name_or_id, self.creator, version_name,
                 model_data=self._get_model(), offline=False
             )
 
@@ -108,7 +110,7 @@ class ModelManager:
                 OfflineModeEnabled,
         ):
             version_name, version_id, version_dir = self._find_local_version(version)
-            return VersionManager(version_dir, self.model_name_or_id, version_name, offline=True)
+            return VersionManager(version_dir, self.model_name_or_id, self.creator, version_name, offline=True)
 
     def get_file(self, version: Union[str, int, None] = None, pattern: str = None):
         """
@@ -136,7 +138,8 @@ class ModelManager:
         with self.lock:
             retval = []
             for version_name, version_id, version_dir in self._list_local_versions():
-                retval.append(VersionManager(version_dir, self.model_name_or_id, version_name, offline=True))
+                retval.append(VersionManager(version_dir, self.model_name_or_id, self.creator,
+                                             version_name, offline=True))
 
             return retval
 

@@ -42,18 +42,18 @@ class TestManagerDispatch:
         assert len(repo_manager.list_models()) == 1
         assert os.path.samefile(
             repo_manager.get_file('amiya arknights (old)', 'v1.0'),
-            os.path.join(repo_dir, 'amiya_arknights_old__115427', 'v1_0__124870', 'files', 'amiya.pt')
+            os.path.join(repo_dir, 'amiya_arknights_old__narugo1992__115427', 'v1_0__124870', 'files', 'amiya.pt')
         )
         assert repo_manager.total_size == 25451
 
         with patch('pycivitai.manager.dispatch.OFFLINE_MODE', True):
             assert os.path.samefile(
                 repo_manager.get_file('amiya arknights (old)', 'v1.0'),
-                os.path.join(repo_dir, 'amiya_arknights_old__115427', 'v1_0__124870', 'files', 'amiya.pt')
+                os.path.join(repo_dir, 'amiya_arknights_old__narugo1992__115427', 'v1_0__124870', 'files', 'amiya.pt')
             )
             assert os.path.samefile(
                 repo_manager.get_file('amiya arknights (old)'),
-                os.path.join(repo_dir, 'amiya_arknights_old__115427', 'v1_0__124870', 'files', 'amiya.pt')
+                os.path.join(repo_dir, 'amiya_arknights_old__narugo1992__115427', 'v1_0__124870', 'files', 'amiya.pt')
             )
             with pytest.raises(LocalVersionNotFound):
                 _ = repo_manager.get_file('amiya arknights (old)', 'v1.1')
@@ -62,15 +62,15 @@ class TestManagerDispatch:
 
         assert os.path.samefile(
             repo_manager.get_file('amiya arknights (old)'),
-            os.path.join(repo_dir, 'amiya_arknights_old__115427', 'v1_1__124885', 'files', 'amiya.pt')
+            os.path.join(repo_dir, 'amiya_arknights_old__narugo1992__115427', 'v1_1__124885', 'files', 'amiya.pt')
         )
         assert os.path.samefile(
             repo_manager.get_file('amiya arknights (old)', 'v1.1'),
-            os.path.join(repo_dir, 'amiya_arknights_old__115427', 'v1_1__124885', 'files', 'amiya.pt')
+            os.path.join(repo_dir, 'amiya_arknights_old__narugo1992__115427', 'v1_1__124885', 'files', 'amiya.pt')
         )
         assert os.path.samefile(
             repo_manager.get_file('明日方舟-安洁莉娜,Arknights-Angeline'),
-            os.path.join(repo_dir, '明日方舟_安洁莉娜_arknights_angeline__5632', 'v1_0__6555', 'files',
+            os.path.join(repo_dir, '明日方舟_安洁莉娜_arknights_angeline__zbw__5632', 'v1_0__6555', 'files',
                          '安洁莉娜5(头巾headband,三套衣服coat,multiple strap,swimsuit),.safetensors')
         )
         assert repo_manager.total_size == 37914498

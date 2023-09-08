@@ -73,13 +73,23 @@ def mock_no_choices():
 class TestEntry:
     def test_version(self):
         result = simulate_entry(cli, ['cli', '-v'])
-        assert result.exitcode == 0
+        assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                     f'Stdout:\n' \
+                                     f'{result.stdout}\n' \
+                                     f'\n' \
+                                     f'Stderr:\n' \
+                                     f'{result.stderr}'
         assert __TITLE__.lower() in result.stdout.lower()
         assert __VERSION__.lower() in result.stdout.lower()
 
     def test_delete_all(self, sample_repo, text_aligner):
         result = simulate_entry(cli, ['cli', 'delete-cache', '-A'])
-        assert result.exitcode == 0
+        assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                     f'Stdout:\n' \
+                                     f'{result.stdout}\n' \
+                                     f'\n' \
+                                     f'Stderr:\n' \
+                                     f'{result.stderr}'
         text_aligner.assert_equal(
             'All models deleted, total 24.854 KiB.',
             result.stdout,
@@ -90,7 +100,12 @@ class TestEntry:
         assert sample_repo.total_size == 25451
         with patch('pycivitai.entry._confirm', lambda x: True):
             result = simulate_entry(cli, ['cli', 'delete-cache'])
-            assert result.exitcode == 0
+            assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                         f'Stdout:\n' \
+                                         f'{result.stdout}\n' \
+                                         f'\n' \
+                                         f'Stderr:\n' \
+                                         f'{result.stderr}'
             text_aligner.assert_equal(
                 'Deletion complete!',
                 result.stdout,
@@ -102,7 +117,12 @@ class TestEntry:
         assert sample_repo.total_size == 25451
         with patch('pycivitai.entry._confirm', lambda x: False):
             result = simulate_entry(cli, ['cli', 'delete-cache'])
-            assert result.exitcode == 0
+            assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                         f'Stdout:\n' \
+                                         f'{result.stdout}\n' \
+                                         f'\n' \
+                                         f'Stderr:\n' \
+                                         f'{result.stderr}'
         assert sample_repo.total_size == 25451
 
     @skipUnless(InquirerPy is not None, 'InquirePy required')
@@ -110,7 +130,12 @@ class TestEntry:
         assert empty_repo.total_size == 0
         with patch('pycivitai.entry._confirm', lambda x: True):
             result = simulate_entry(cli, ['cli', 'delete-cache'])
-            assert result.exitcode == 0
+            assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                         f'Stdout:\n' \
+                                         f'{result.stdout}\n' \
+                                         f'\n' \
+                                         f'Stderr:\n' \
+                                         f'{result.stderr}'
             text_aligner.assert_equal(
                 'No models found to delete.',
                 result.stdout,
@@ -122,7 +147,12 @@ class TestEntry:
         assert sample_repo.total_size == 25451
         with patch('pycivitai.entry._confirm', lambda x: True):
             result = simulate_entry(cli, ['cli', 'delete-cache'])
-            assert result.exitcode == 0
+            assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                         f'Stdout:\n' \
+                                         f'{result.stdout}\n' \
+                                         f'\n' \
+                                         f'Stderr:\n' \
+                                         f'{result.stderr}'
             text_aligner.assert_equal(
                 'Deletion cancelled.',
                 result.stdout,
@@ -131,24 +161,39 @@ class TestEntry:
 
     def test_get(self, sample_repo):
         result = simulate_entry(cli, ['cli', 'get', '-m', 'amiya arknights (old)'])
-        assert result.exitcode == 0
+        assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                     f'Stdout:\n' \
+                                     f'{result.stdout}\n' \
+                                     f'\n' \
+                                     f'Stderr:\n' \
+                                     f'{result.stderr}'
         assert os.path.samefile(
             result.stdout.strip(),
-            os.path.join('repo', 'amiya_arknights_old__115427', 'v1_1__124885', 'files', 'amiya.pt'),
+            os.path.join('repo', 'amiya_arknights_old__narugo1992__115427', 'v1_1__124885', 'files', 'amiya.pt'),
         )
 
     def test_get_offline(self, sample_repo):
         result = simulate_entry(cli, ['cli', 'get', '-m', 'amiya arknights (old)', '--offline'])
-        assert result.exitcode == 0
+        assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                     f'Stdout:\n' \
+                                     f'{result.stdout}\n' \
+                                     f'\n' \
+                                     f'Stderr:\n' \
+                                     f'{result.stderr}'
         assert os.path.samefile(
             result.stdout.strip(),
-            os.path.join('repo', 'amiya_arknights_old__115427', 'v1_0__124870', 'files', 'amiya.pt'),
+            os.path.join('repo', 'amiya_arknights_old__narugo1992__115427', 'v1_0__124870', 'files', 'amiya.pt'),
         )
 
     def test_get_specific_version(self, sample_repo):
         result = simulate_entry(cli, ['cli', 'get', '-m', 'amiya arknights (old)', '-v', 'v1.0'])
-        assert result.exitcode == 0
+        assert result.exitcode == 0, f'Exitcode - {result.exitcode}\n' \
+                                     f'Stdout:\n' \
+                                     f'{result.stdout}\n' \
+                                     f'\n' \
+                                     f'Stderr:\n' \
+                                     f'{result.stderr}'
         assert os.path.samefile(
             result.stdout.strip(),
-            os.path.join('repo', 'amiya_arknights_old__115427', 'v1_0__124870', 'files', 'amiya.pt'),
+            os.path.join('repo', 'amiya_arknights_old__narugo1992__115427', 'v1_0__124870', 'files', 'amiya.pt'),
         )

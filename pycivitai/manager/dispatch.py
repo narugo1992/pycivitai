@@ -1,6 +1,6 @@
 import os
 import shutil
-from typing import Iterator, Tuple, Union, List
+from typing import Iterator, Tuple, Union, List, Optional
 
 import requests
 from filelock import FileLock
@@ -39,43 +39,45 @@ class DispatchManager:
         self.lock = FileLock(self._f_lock)
         self._offline = offline
 
-    def _model_path(self, model_name: str, model_id: int):
-        return os.path.join(self.root_dir, f'{_soft_name_strip(model_name)}__{model_id}')
+    def _model_path(self, model_name: str, creator: str, model_id: int):
+        return os.path.join(self.root_dir, f'{_soft_name_strip(model_name)}__{_soft_name_strip(creator)}__{model_id}')
 
-    def _list_local_models(self) -> Iterator[Tuple[str, int, str]]:
+    def _list_local_models(self) -> Iterator[Tuple[str, str, int, str]]:
         for dir_ in os.listdir(self.root_dir):
             segs = dir_.split('__')
-            if os.path.isdir(os.path.join(self.root_dir, dir_)) and len(segs) == 2:
-                model_name, model_id = segs
+            if os.path.isdir(os.path.join(self.root_dir, dir_)) and len(segs) == 3:
+                model_name, creator, model_id = segs
                 model_id = int(model_id)
-                yield model_name, model_id, os.path.join(self.root_dir, dir_)
+                yield model_name, creator, model_id, os.path.join(self.root_dir, dir_)
 
-    def _find_online_model(self, model_name_or_id: Union[str, int]):
-        model_data = find_model(model_name_or_id)
-        model_id, model_name = model_data['id'], model_data['name']
-        return model_name, model_id, self._model_path(model_name, model_id), model_data
+    def _find_online_model(self, model_name_or_id: Union[str, int], creator: Optional[str] = None):
+        model_data = find_model(model_name_or_id, creator)
+        model_id, creator, model_name = model_data['id'], model_data['creator']['username'], model_data['name']
+        return model_name, creator, model_id, self._model_path(model_name, creator, model_id), model_data
 
-    def _find_local_model(self, model_name_or_id: Union[str, int]):
+    def _find_local_model(self, model_name_or_id: Union[str, int], creator: Optional[str] = None):
         valid_models = []
-        for model_name, model_id, model_dir in self._list_local_models():
-            if (_soft_name_strip(str(model_name_or_id)) == model_name) or (model_id == model_name_or_id):
-                valid_models.append((model_name, model_id, model_dir))
+        for model_name, model_creator, model_id, model_dir in self._list_local_models():
+            if ((_soft_name_strip(str(model_name_or_id)) == model_name) or (model_id == model_name_or_id)) and \
+                    (creator is None or _soft_name_strip(model_creator) == _soft_name_strip(creator)):
+                valid_models.append((model_name, model_creator, model_id, model_dir))
 
         if not valid_models:
             raise LocalModelNotFound(model_name_or_id)
         elif len(valid_models) > 1:
             raise LocalModelDuplicated(valid_models)
         else:
-            model_name, model_id, model_dir = valid_models[0]
-            return model_name, model_id, model_dir
+            model_name, model_creator, model_id, model_dir = valid_models[0]
+            return model_name, model_creator, model_id, model_dir
 
-    def _get_model_manager(self, model_name_or_id: Union[str, int]):
+    def _get_model_manager(self, model_name_or_id: Union[str, int], creator: Optional[str] = None):
         try:
             if OFFLINE_MODE or self._offline:
                 raise OfflineModeEnabled
 
-            model_name, model_id, model_dir, model_data = self._find_online_model(model_name_or_id)
-            return ModelManager(model_dir, model_name_or_id, model_data, offline=False)
+            model_name, model_creator, model_id, model_dir, model_data = \
+                self._find_online_model(model_name_or_id, creator)
+            return ModelManager(model_dir, model_name_or_id, model_creator, model_data, offline=False)
         except (requests.exceptions.SSLError, requests.exceptions.ProxyError):
             # Actually raise for those subclasses of ConnectionError
             raise
@@ -84,11 +86,11 @@ class DispatchManager:
                 requests.exceptions.Timeout,
                 OfflineModeEnabled,
         ):
-            model_name, model_id, model_dir = self._find_local_model(model_name_or_id)
-            return ModelManager(model_dir, model_name_or_id, offline=True)
+            model_name, model_creator, model_id, model_dir = self._find_local_model(model_name_or_id, creator)
+            return ModelManager(model_dir, model_name_or_id, model_creator, offline=True)
 
-    def get_file(self, model_name_or_id: Union[str, int],
-                 version: Union[str, int, None] = None, pattern: str = None):
+    def get_file(self, model_name_or_id: Union[str, int], version: Union[str, int, None] = None,
+                 pattern: str = None, creator: Optional[str] = None, ):
         """
         Get the local file path of the specified model file.
 
@@ -98,13 +100,15 @@ class DispatchManager:
         :type version: Union[str, int, None]
         :param pattern: The pattern or name of the file to get. If None, the primary file will be returned.
         :type pattern: str
+        :param creator: Name of creator. ``None`` means anyone.
+        :type creator: Optional[str]
         :return: The local path of the specified model file.
         :rtype: str
         :raises LocalModelNotFound: If the specified model is not found locally.
         :raises LocalModelDuplicated: If multiple models matching the model_name_or_id are found locally.
         """
         with self.lock:
-            return self._get_model_manager(model_name_or_id).get_file(version, pattern)
+            return self._get_model_manager(model_name_or_id, creator).get_file(version, pattern)
 
     def list_models(self) -> List[ModelManager]:
         """
@@ -115,8 +119,8 @@ class DispatchManager:
         """
         with self.lock:
             retval = []
-            for model_name, model_id, model_dir in self._list_local_models():
-                retval.append(ModelManager(model_dir, model_name, offline=True))
+            for model_name, model_creator, model_id, model_dir in self._list_local_models():
+                retval.append(ModelManager(model_dir, model_name, model_creator, offline=True))
 
             return retval
 
@@ -140,7 +144,7 @@ class DispatchManager:
         :raises LocalModelNotFound: If the specified model is not found locally.
         """
         with self.lock:
-            model_name, model_id, model_dir = self._find_local_model(model_name_or_id)
+            model_name, model_creator, model_id, model_dir = self._find_local_model(model_name_or_id)
             shutil.rmtree(model_dir, ignore_errors=True)
 
     def delete_version(self, model_name_or_id: Union[str, int], version: Union[str, int]):

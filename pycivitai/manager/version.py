@@ -45,19 +45,21 @@ class VersionManager:
     Management of specific version of model.
     """
 
-    def __init__(self, root_dir: str, model_name_or_id: Union[str, int], version: Union[str, int],
-                 model_data: Optional[dict] = None, offline: bool = False):
+    def __init__(self, root_dir: str, model_name_or_id: Union[str, int], creator: Optional[str],
+                 version: Union[str, int], model_data: Optional[dict] = None, offline: bool = False):
         """
         Manages the local model files downloaded from civitai.com for a specific model and version.
 
         :param root_dir: The root directory where the model files will be managed.
         :param model_name_or_id: The name or ID of the model to manage files for.
+        :param creator: Name of creator. ``None`` means anyone.
         :param version: The version ID or name to manage files for.
         :param model_data: Optional dictionary containing model information to avoid fetching it from the API.
         :param offline: If True, the manager operates in offline mode, using locally downloaded resources.
         """
         self.root_dir = root_dir
         self.model_name_or_id = model_name_or_id
+        self.creator = creator
         self._model_data = model_data
         self.version = version
         self._version_data = None
@@ -80,7 +82,7 @@ class VersionManager:
 
     def _get_model(self):
         if not self._model_data:
-            self._model_data = find_model(self.model_name_or_id)
+            self._model_data = find_model(self.model_name_or_id, self.creator)
         return self._model_data
 
     def _get_version(self):

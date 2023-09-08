@@ -10,7 +10,7 @@ from test.testings import get_testfile
 
 @pytest.fixture()
 def sample_model_dir():
-    return get_testfile('sample_repo_1', 'amiya_arknights_old__115427')
+    return get_testfile('sample_repo_1', 'amiya_arknights_old__narugo1992__115427')
 
 
 @pytest.fixture()
