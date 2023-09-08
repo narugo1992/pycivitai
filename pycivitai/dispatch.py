@@ -29,19 +29,19 @@ def _get_global_manager(offline: bool):
     return DispatchManager(_get_storage_dir(), offline)
 
 
-def civitai_download(model: Union[str, int], creator: Optional[str] = None,
-                     version: Union[str, int, None] = None, file: str = None, offline: bool = False):
+def civitai_download(model: Union[str, int], version: Union[str, int, None] = None,
+                     file: str = None, creator: Optional[str] = None, offline: bool = False):
     """
     Download and get the local file path of the specified model file.
 
     :param model: The name or ID of the model to download and manage.
     :type model: Union[str, int]
-    :param creator: Name of creator. ``None`` means anyone.
-    :type creator: Optional[str]
     :param version: The version ID or name of the model version. If None, the latest version is used.
     :type version: Union[str, int, None]
     :param file: The pattern or name of the file to get. If None, the primary file will be returned.
     :type file: str
+    :param creator: Name of creator. ``None`` means anyone.
+    :type creator: Optional[str]
     :param offline: If True, the manager operates in offline mode, using locally downloaded resources.
     :type offline: bool
     :return: The local path of the specified model file.

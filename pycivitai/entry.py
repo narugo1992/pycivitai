@@ -137,4 +137,4 @@ def delete_cache(delete_all):
 @click.option('--offline', 'offline', is_flag=True, type=bool, default=False,
               help='Offline mode. Default is disabled.', show_default=True)
 def get_(model, creator, version, file, offline):
-    click.echo(civitai_download(model, creator, version, file, offline))
+    click.echo(civitai_download(model, version, file, creator=creator, offline=offline))
