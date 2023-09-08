@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pycivitai.client.resource &mdash; pycivitai 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="pycivitai.config" href="../config/index.html" />
+    <link rel="prev" title="pycivitai.client.http" href="http.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pycivitai
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation/index.html">Installation</a></li>
+</ul>
+<p><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">pycivitai.client</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="http.html">pycivitai.client.http</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pycivitai.client.resource</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#find-model-by-name">find_model_by_name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#find-model-by-id">find_model_by_id</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#find-model">find_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#find-version">find_version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#find-resource">find_resource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resource">Resource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resourcenotfound">ResourceNotFound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modelnotfound">ModelNotFound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modelversionnotfound">ModelVersionNotFound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resourceduplicated">ResourceDuplicated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modelversionduplicated">ModelVersionDuplicated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modelfoundduplicated">ModelFoundDuplicated</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../config/index.html">pycivitai.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dispatch/index.html">pycivitai.dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manager/index.html">pycivitai.manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/index.html">pycivitai.utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pycivitai</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">pycivitai.client</a> &raquo;</li>
+        
+      <li>pycivitai.client.resource</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/api_doc/client/resource.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+    
+    
+  <section id="module-pycivitai.client.resource">
+<span id="pycivitai-client-resource"></span><h1>pycivitai.client.resource<a class="headerlink" href="#module-pycivitai.client.resource" title="Permalink to this headline">¶</a></h1>
+<section id="find-model-by-name">
+<h2>find_model_by_name<a class="headerlink" href="#find-model-by-name" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pycivitai.client.resource.find_model_by_name">
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_model_by_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_model_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_model_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve model information from the CiviTAI API based on the given model name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em>) – The name of the model to retrieve information for.</p></li>
+<li><p><strong>creator</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of creator. <code class="docutils literal notranslate"><span class="pre">None</span></code> means anyone.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dictionary containing the model information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#pycivitai.client.resource.ModelNotFound" title="pycivitai.client.resource.ModelNotFound"><strong>ModelNotFound</strong></a> – If the model with the given name is not found.</p></li>
+<li><p><a class="reference internal" href="#pycivitai.client.resource.ModelFoundDuplicated" title="pycivitai.client.resource.ModelFoundDuplicated"><strong>ModelFoundDuplicated</strong></a> – If multiple models with the same name are found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="find-model-by-id">
+<h2>find_model_by_id<a class="headerlink" href="#find-model-by-id" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pycivitai.client.resource.find_model_by_id">
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_model_by_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_id</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_model_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_model_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve model information from the CiviTAI API based on the given model ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>model_id</strong> (<em>int</em>) – The ID of the model to retrieve information for.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dictionary containing the model information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pycivitai.client.resource.ModelNotFound" title="pycivitai.client.resource.ModelNotFound"><strong>ModelNotFound</strong></a> – If the model with the given ID is not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="find-model">
+<h2>find_model<a class="headerlink" href="#find-model" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pycivitai.client.resource.find_model">
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find model information from the CiviTAI API based on the given model name or ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name_or_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The name or ID of the model to retrieve information for.</p></li>
+<li><p><strong>creator</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of creator. <code class="docutils literal notranslate"><span class="pre">None</span></code> means anyone.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dictionary containing the model information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> – If the model name or ID is not a valid integer or string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="find-version">
+<h2>find_version<a class="headerlink" href="#find-version" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pycivitai.client.resource.find_version">
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_version</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_data</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">version</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the specified version from the model data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_data</strong> (<em>dict</em>) – The model data containing version information.</p></li>
+<li><p><strong>version</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>, </em><em>None</em><em>]</em>) – The version ID or name to find. If None, the first version will be chosen.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dictionary containing the selected version information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#pycivitai.client.resource.ModelVersionNotFound" title="pycivitai.client.resource.ModelVersionNotFound"><strong>ModelVersionNotFound</strong></a> – If the specified version is not found.</p></li>
+<li><p><a class="reference internal" href="#pycivitai.client.resource.ModelVersionDuplicated" title="pycivitai.client.resource.ModelVersionDuplicated"><strong>ModelVersionDuplicated</strong></a> – If multiple versions with the same ID or name are found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="find-resource">
+<h2>find_resource<a class="headerlink" href="#find-resource" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pycivitai.client.resource.find_resource">
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_resource</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_data</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">version_data</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">pattern</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the specified resource from the model and version data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_data</strong> (<em>dict</em>) – The model data containing version information.</p></li>
+<li><p><strong>version_data</strong> (<em>dict</em>) – The version data containing resource information.</p></li>
+<li><p><strong>pattern</strong> (<em>str</em>) – The pattern to match the resource filename. If None, the primary resource will be chosen.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The resource information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#pycivitai.client.resource.Resource" title="pycivitai.client.resource.Resource">Resource</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If the pattern of the resource is not a valid string.</p></li>
+<li><p><a class="reference internal" href="#pycivitai.client.resource.ResourceNotFound" title="pycivitai.client.resource.ResourceNotFound"><strong>ResourceNotFound</strong></a> – If the specified resource is not found.</p></li>
+<li><p><a class="reference internal" href="#pycivitai.client.resource.ResourceDuplicated" title="pycivitai.client.resource.ResourceDuplicated"><strong>ResourceDuplicated</strong></a> – If multiple resources with the same name are found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="resource">
+<h2>Resource<a class="headerlink" href="#resource" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycivitai.client.resource.Resource">
+<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">Resource</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">model_id</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">version_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">version_id</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">is_primary</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sha256</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">crc32</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">hashes</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.Resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data class for resource.</p>
+</dd></dl>
+
+</section>
+<section id="resourcenotfound">
+<h2>ResourceNotFound<a class="headerlink" href="#resourcenotfound" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.client.resource.ResourceNotFound">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ResourceNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ResourceNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ResourceNotFound" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="modelnotfound">
+<h2>ModelNotFound<a class="headerlink" href="#modelnotfound" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.client.resource.ModelNotFound">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelNotFound" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="modelversionnotfound">
+<h2>ModelVersionNotFound<a class="headerlink" href="#modelversionnotfound" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.client.resource.ModelVersionNotFound">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelVersionNotFound</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelVersionNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelVersionNotFound" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="resourceduplicated">
+<h2>ResourceDuplicated<a class="headerlink" href="#resourceduplicated" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.client.resource.ResourceDuplicated">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ResourceDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ResourceDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ResourceDuplicated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="modelversionduplicated">
+<h2>ModelVersionDuplicated<a class="headerlink" href="#modelversionduplicated" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.client.resource.ModelVersionDuplicated">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelVersionDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelVersionDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelVersionDuplicated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="modelfoundduplicated">
+<h2>ModelFoundDuplicated<a class="headerlink" href="#modelfoundduplicated" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.client.resource.ModelFoundDuplicated">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">ModelFoundDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#ModelFoundDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.ModelFoundDuplicated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../config/index.html" class="btn btn-neutral float-right" title="pycivitai.config" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="http.html" class="btn btn-neutral float-left" title="pycivitai.client.http" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2023, narugo1992
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+    <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: v0.1.0
+    <span class="fa fa-caret-down"></span>
+  </span>
+        <div class="rst-other-versions">
+                <dl>
+                    <dt>Tags</dt>
+                        <dd><a href="../../../v0.0.1/api_doc/client/resource.html">v0.0.1</a></dd>
+                        <dd><a href="../../../v0.0.2/api_doc/client/resource.html">v0.0.2</a></dd>
+                        <dd><a href="resource.html">v0.1.0</a></dd>
+                </dl>
+                <dl>
+                    <dt>Branches</dt>
+                        <dd><a href="../../../main/api_doc/client/resource.html">main</a></dd>
+                </dl>
+        </div>
+    </div>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
