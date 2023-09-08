@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycivitai.dispatch &mdash; pycivitai 0.0.2 documentation</title>
+  <title>pycivitai.dispatch &mdash; pycivitai 0.1.0 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.1.0
               </div>
             
           
@@ -173,15 +173,15 @@
 <h2>civitai_download<a class="headerlink" href="#civitai-download" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="pycivitai.dispatch.civitai_download">
-<code class="sig-prename descclassname">pycivitai.dispatch.</code><code class="sig-name descname">civitai_download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">version</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">file</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">offline</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/dispatch.html#civitai_download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.dispatch.civitai_download" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pycivitai.dispatch.</code><code class="sig-name descname">civitai_download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">version</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">file</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">offline</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/dispatch.html#civitai_download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.dispatch.civitai_download" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download and get the local file path of the specified model file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>) – The name or ID of the model to download and manage.</p></li>
-<li><p><strong>creator</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of creator. <code class="docutils literal notranslate"><span class="pre">None</span></code> means anyone.</p></li>
 <li><p><strong>version</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>int</em><em>, </em><em>None</em><em>]</em>) – The version ID or name of the model version. If None, the latest version is used.</p></li>
 <li><p><strong>file</strong> (<em>str</em>) – The pattern or name of the file to get. If None, the primary file will be returned.</p></li>
+<li><p><strong>creator</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of creator. <code class="docutils literal notranslate"><span class="pre">None</span></code> means anyone.</p></li>
 <li><p><strong>offline</strong> (<em>bool</em>) – If True, the manager operates in offline mode, using locally downloaded resources.</p></li>
 </ul>
 </dd>

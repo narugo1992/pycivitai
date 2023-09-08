@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>pycivitai.dispatch &mdash; pycivitai 0.0.2 documentation</title>
+  <title>pycivitai.dispatch &mdash; pycivitai 0.1.0 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.1.0
               </div>
             
           
@@ -190,19 +190,19 @@
     <span class="k">return</span> <span class="n">DispatchManager</span><span class="p">(</span><span class="n">_get_storage_dir</span><span class="p">(),</span> <span class="n">offline</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="civitai_download"><a class="viewcode-back" href="../../api_doc/dispatch/index.html#pycivitai.dispatch.civitai_download">[docs]</a><span class="k">def</span> <span class="nf">civitai_download</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="civitai_download"><a class="viewcode-back" href="../../api_doc/dispatch/index.html#pycivitai.dispatch.civitai_download">[docs]</a><span class="k">def</span> <span class="nf">civitai_download</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                     <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Download and get the local file path of the specified model file.</span>
 
 <span class="sd">    :param model: The name or ID of the model to download and manage.</span>
 <span class="sd">    :type model: Union[str, int]</span>
-<span class="sd">    :param creator: Name of creator. ``None`` means anyone.</span>
-<span class="sd">    :type creator: Optional[str]</span>
 <span class="sd">    :param version: The version ID or name of the model version. If None, the latest version is used.</span>
 <span class="sd">    :type version: Union[str, int, None]</span>
 <span class="sd">    :param file: The pattern or name of the file to get. If None, the primary file will be returned.</span>
 <span class="sd">    :type file: str</span>
+<span class="sd">    :param creator: Name of creator. ``None`` means anyone.</span>
+<span class="sd">    :type creator: Optional[str]</span>
 <span class="sd">    :param offline: If True, the manager operates in offline mode, using locally downloaded resources.</span>
 <span class="sd">    :type offline: bool</span>
 <span class="sd">    :return: The local path of the specified model file.</span>
