@@ -44,6 +44,8 @@ class Resource:
     is_primary: bool
     url: str
     sha256: str
+    crc32: str
+    hashes: dict
     size: int
 
 
@@ -205,6 +207,8 @@ def find_resource(model_data: dict, version_data: dict, pattern: str = None):
         filename=select_file['name'],
         url=select_file['downloadUrl'],
         sha256=select_file['hashes']['SHA256'],
+        crc32=select_file['hashes']['CRC32'],
+        hashes=select_file['hashes'],
         is_primary=select_file.get('primary', False),
         size=file_size,
     )
