@@ -204,6 +204,8 @@
     <span class="n">is_primary</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">sha256</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">crc32</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">hashes</span><span class="p">:</span> <span class="nb">dict</span>
     <span class="n">size</span><span class="p">:</span> <span class="nb">int</span></div>
 
 
@@ -357,6 +359,8 @@
         <span class="n">filename</span><span class="o">=</span><span class="n">select_file</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
         <span class="n">url</span><span class="o">=</span><span class="n">select_file</span><span class="p">[</span><span class="s1">&#39;downloadUrl&#39;</span><span class="p">],</span>
         <span class="n">sha256</span><span class="o">=</span><span class="n">select_file</span><span class="p">[</span><span class="s1">&#39;hashes&#39;</span><span class="p">][</span><span class="s1">&#39;SHA256&#39;</span><span class="p">],</span>
+        <span class="n">crc32</span><span class="o">=</span><span class="n">select_file</span><span class="p">[</span><span class="s1">&#39;hashes&#39;</span><span class="p">][</span><span class="s1">&#39;CRC32&#39;</span><span class="p">],</span>
+        <span class="n">hashes</span><span class="o">=</span><span class="n">select_file</span><span class="p">[</span><span class="s1">&#39;hashes&#39;</span><span class="p">],</span>
         <span class="n">is_primary</span><span class="o">=</span><span class="n">select_file</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;primary&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
         <span class="n">size</span><span class="o">=</span><span class="n">file_size</span><span class="p">,</span>
     <span class="p">)</span></div>
@@ -402,9 +406,8 @@
                 </dl>
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="../../../../dev/user/index.html">dev/user</a></dd>
-                        <dd><a href="../../../../dev/hash/index.html">dev/hash</a></dd>
                         <dd><a href="resource.html">main</a></dd>
+                        <dd><a href="../../../../dev/user/index.html">dev/user</a></dd>
                 </dl>
         </div>
     </div>
