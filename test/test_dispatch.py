@@ -34,38 +34,38 @@ class TestDispatch:
         assert resource.is_primary
         assert resource.size == 37863532
 
-        resource = civitai_find_online('Cetus-Mix', 'V4')
-        assert resource.model_id == 6755
-        assert resource.model_name == 'Cetus-Mix'
-        assert resource.version_id == 78676
-        assert resource.version_name == 'V4'
-        assert resource.filename == 'cetusMix_v4.safetensors'
-        assert resource.sha256 == 'B42B09FF12CA9CD70D78AA8210F8D4577EC513FC1484A68615385B8076292639'
+        resource = civitai_find_online('toki/飛鳥馬トキ/时 (Blue Archive)', 'v1.4')
+        assert resource.model_id == 121604
+        assert resource.model_name == 'toki/飛鳥馬トキ/时 (Blue Archive)'
+        assert resource.version_id == 153813
+        assert resource.version_name == 'v1.4'
+        assert resource.filename == 'toki_bluearchive.safetensors'
+        assert resource.sha256 == '937404D0C14B2B14D87853DCCEDEC3EBF6ED0E79129E72659C2673873F6F0685'
         assert resource.is_primary
-        assert resource.size == 3894258133
+        assert resource.size == 14722160
 
-        resource = civitai_find_online('Cetus-Mix', 'V4', '*.safetensors')
-        assert resource.model_id == 6755
-        assert resource.model_name == 'Cetus-Mix'
-        assert resource.version_id == 78676
-        assert resource.version_name == 'V4'
-        assert resource.filename == 'cetusMix_v4.safetensors'
-        assert resource.sha256 == 'B42B09FF12CA9CD70D78AA8210F8D4577EC513FC1484A68615385B8076292639'
+        resource = civitai_find_online('toki/飛鳥馬トキ/时 (Blue Archive)', 'v1.4', '*.safetensors')
+        assert resource.model_id == 121604
+        assert resource.model_name == 'toki/飛鳥馬トキ/时 (Blue Archive)'
+        assert resource.version_id == 153813
+        assert resource.version_name == 'v1.4'
+        assert resource.filename == 'toki_bluearchive.safetensors'
+        assert resource.sha256 == '937404D0C14B2B14D87853DCCEDEC3EBF6ED0E79129E72659C2673873F6F0685'
         assert resource.is_primary
-        assert resource.size == 3894258133
+        assert resource.size == 14722160
 
-        resource = civitai_find_online('Cetus-Mix', 'V4', '*.vae.pt')
-        assert resource.model_id == 6755
-        assert resource.model_name == 'Cetus-Mix'
-        assert resource.version_id == 78676
-        assert resource.version_name == 'V4'
-        assert resource.filename == 'MoistMix.vae.pt'
-        assert resource.sha256 == 'DF3C506E51B7EE1D7B5A6A2BB7142D47D488743C96AA778AFB0F53A2CDC2D38D'
+        resource = civitai_find_online('toki/飛鳥馬トキ/时 (Blue Archive)', 'v1.4', '*.pt')
+        assert resource.model_id == 121604
+        assert resource.model_name == 'toki/飛鳥馬トキ/时 (Blue Archive)'
+        assert resource.version_id == 153813
+        assert resource.version_name == 'v1.4'
+        assert resource.filename == 'toki_bluearchive.pt'
+        assert resource.sha256 == '4CB82DDAE9CE0CBA475E89A083252F9179065B00BA233D0D9D8A44E323DDB53A'
         assert not resource.is_primary
-        assert resource.size == 404662241
+        assert resource.size == 13141
 
         with pytest.raises(ResourceDuplicated):
-            _ = civitai_find_online('Cetus-Mix', 'V4', '*')
+            _ = civitai_find_online('toki/飛鳥馬トキ/时 (Blue Archive)', 'v1.4', '*')
 
     def test_civitai_download(self):
         file = civitai_download('amiya arknights (old)')

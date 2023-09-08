@@ -110,35 +110,38 @@ class TestClientResource:
             _ = find_resource(amiya_model_data, amiya_model_v1_1_data, 233)
 
     def test_with_Cetus_Mix(self):
-        model_data = find_model('Cetus-Mix')
-        version_data = find_version(model_data, 'V4')
+        model_data = find_model('toki/飛鳥馬トキ/时 (Blue Archive)')
+        version_data = find_version(model_data, 'v1.4')
 
         data = find_resource(model_data, version_data)
-        assert data.model_id == 6755
-        assert data.model_name == 'Cetus-Mix'
-        assert data.version_id == 78676
-        assert data.version_name == 'V4'
-        assert data.filename == 'cetusMix_v4.safetensors'
-        assert data.sha256 == 'B42B09FF12CA9CD70D78AA8210F8D4577EC513FC1484A68615385B8076292639'
-        assert data.size == 3894258133
+        assert data.model_id == 121604
+        assert data.model_name == 'toki/飛鳥馬トキ/时 (Blue Archive)'
+        assert data.version_id == 153813
+        assert data.version_name == 'v1.4'
+        assert data.filename == 'toki_bluearchive.safetensors'
+        assert data.sha256 == '937404D0C14B2B14D87853DCCEDEC3EBF6ED0E79129E72659C2673873F6F0685'
+        assert data.is_primary
+        assert data.size == 14722160
 
         data = find_resource(model_data, version_data, '*.safetensors')
-        assert data.model_id == 6755
-        assert data.model_name == 'Cetus-Mix'
-        assert data.version_id == 78676
-        assert data.version_name == 'V4'
-        assert data.filename == 'cetusMix_v4.safetensors'
-        assert data.sha256 == 'B42B09FF12CA9CD70D78AA8210F8D4577EC513FC1484A68615385B8076292639'
-        assert data.size == 3894258133
+        assert data.model_id == 121604
+        assert data.model_name == 'toki/飛鳥馬トキ/时 (Blue Archive)'
+        assert data.version_id == 153813
+        assert data.version_name == 'v1.4'
+        assert data.filename == 'toki_bluearchive.safetensors'
+        assert data.sha256 == '937404D0C14B2B14D87853DCCEDEC3EBF6ED0E79129E72659C2673873F6F0685'
+        assert data.is_primary
+        assert data.size == 14722160
 
-        data = find_resource(model_data, version_data, '*.vae.pt')
-        assert data.model_id == 6755
-        assert data.model_name == 'Cetus-Mix'
-        assert data.version_id == 78676
-        assert data.version_name == 'V4'
-        assert data.filename == 'MoistMix.vae.pt'
-        assert data.sha256 == 'DF3C506E51B7EE1D7B5A6A2BB7142D47D488743C96AA778AFB0F53A2CDC2D38D'
-        assert data.size == 404662241
+        data = find_resource(model_data, version_data, '*.pt')
+        assert data.model_id == 121604
+        assert data.model_name == 'toki/飛鳥馬トキ/时 (Blue Archive)'
+        assert data.version_id == 153813
+        assert data.version_name == 'v1.4'
+        assert data.filename == 'toki_bluearchive.pt'
+        assert data.sha256 == '4CB82DDAE9CE0CBA475E89A083252F9179065B00BA233D0D9D8A44E323DDB53A'
+        assert not data.is_primary
+        assert data.size == 13141
 
         with pytest.raises(ResourceNotFound):
             _ = find_resource(model_data, version_data, '*.ckpt')
