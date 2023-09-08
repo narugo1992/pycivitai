@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pycivitai.manager.version &mdash; pycivitai 0.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="pycivitai.manager.model" href="model.html" />
+    <link rel="prev" title="pycivitai.manager" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pycivitai
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation/index.html">Installation</a></li>
+</ul>
+<p><span class="caption-text">API Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../client/index.html">pycivitai.client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config/index.html">pycivitai.config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dispatch/index.html">pycivitai.dispatch</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">pycivitai.manager</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pycivitai.manager.version</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#versionmanager">VersionManager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#localfileduplicated">LocalFileDuplicated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#localfilenotfound">LocalFileNotFound</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#localprimaryfileunset">LocalPrimaryFileUnset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#localfile">LocalFile</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html">pycivitai.manager.model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dispatch.html">pycivitai.manager.dispatch</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../utils/index.html">pycivitai.utils</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pycivitai</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">pycivitai.manager</a> &raquo;</li>
+        
+      <li>pycivitai.manager.version</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/api_doc/manager/version.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+    
+    
+  <section id="module-pycivitai.manager.version">
+<span id="pycivitai-manager-version"></span><h1>pycivitai.manager.version<a class="headerlink" href="#module-pycivitai.manager.version" title="Permalink to this headline">¶</a></h1>
+<section id="versionmanager">
+<h2>VersionManager<a class="headerlink" href="#versionmanager" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycivitai.manager.version.VersionManager">
+<em class="property">class </em><code class="sig-prename descclassname">pycivitai.manager.version.</code><code class="sig-name descname">VersionManager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_dir</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">version</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">model_data</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>dict<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">offline</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#VersionManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.VersionManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Management of specific version of model.</p>
+<dl class="py method">
+<dt id="pycivitai.manager.version.VersionManager.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">root_dir</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">version</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>str<span class="p">, </span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">model_data</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>dict<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">offline</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#VersionManager.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.VersionManager.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manages the local model files downloaded from civitai.com for a specific model and version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_dir</strong> – The root directory where the model files will be managed.</p></li>
+<li><p><strong>model_name_or_id</strong> – The name or ID of the model to manage files for.</p></li>
+<li><p><strong>version</strong> – The version ID or name to manage files for.</p></li>
+<li><p><strong>model_data</strong> – Optional dictionary containing model information to avoid fetching it from the API.</p></li>
+<li><p><strong>offline</strong> – If True, the manager operates in offline mode, using locally downloaded resources.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycivitai.manager.version.VersionManager.__repr__">
+<code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#VersionManager.__repr__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.VersionManager.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycivitai.manager.version.VersionManager.__str__">
+<code class="sig-name descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#VersionManager.__str__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.VersionManager.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return str(self).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="pycivitai.manager.version.VersionManager.__weakref__">
+<code class="sig-name descname">__weakref__</code><a class="headerlink" href="#pycivitai.manager.version.VersionManager.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycivitai.manager.version.VersionManager.delete_file">
+<code class="sig-name descname">delete_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#VersionManager.delete_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.VersionManager.delete_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the specified model file from the local storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file to delete.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pycivitai.manager.version.LocalFileNotFound" title="pycivitai.manager.version.LocalFileNotFound"><strong>LocalFileNotFound</strong></a> – If the specified file is not found locally.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycivitai.manager.version.VersionManager.get_file">
+<code class="sig-name descname">get_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pattern</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#VersionManager.get_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.VersionManager.get_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the local file path of the specified model file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pattern</strong> (<em>str</em>) – The pattern or name of the file to get. If None, the primary file will be returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The local path of the specified model file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#pycivitai.manager.version.LocalPrimaryFileUnset" title="pycivitai.manager.version.LocalPrimaryFileUnset"><strong>LocalPrimaryFileUnset</strong></a> – If the primary file is not set and no specific pattern is provided.</p></li>
+<li><p><a class="reference internal" href="#pycivitai.manager.version.LocalFileNotFound" title="pycivitai.manager.version.LocalFileNotFound"><strong>LocalFileNotFound</strong></a> – If the specified file is not found locally.</p></li>
+<li><p><a class="reference internal" href="#pycivitai.manager.version.LocalFileDuplicated" title="pycivitai.manager.version.LocalFileDuplicated"><strong>LocalFileDuplicated</strong></a> – If multiple files matching the pattern are found locally.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycivitai.manager.version.VersionManager.list_files">
+<code class="sig-name descname">list_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="#pycivitai.manager.version.LocalFile" title="pycivitai.manager.version.LocalFile">pycivitai.manager.version.LocalFile</a><span class="p">]</span><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#VersionManager.list_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.VersionManager.list_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all the local model files associated with this version manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of LocalFile objects containing information about each local model file.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="#pycivitai.manager.version.LocalFile" title="pycivitai.manager.version.LocalFile">LocalFile</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pycivitai.manager.version.VersionManager.total_size">
+<em class="property">property </em><code class="sig-name descname">total_size</code><a class="headerlink" href="#pycivitai.manager.version.VersionManager.total_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the total size of all the local model files associated with this version manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The total size in bytes.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="localfileduplicated">
+<h2>LocalFileDuplicated<a class="headerlink" href="#localfileduplicated" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.manager.version.LocalFileDuplicated">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.manager.version.</code><code class="sig-name descname">LocalFileDuplicated</code><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#LocalFileDuplicated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.LocalFileDuplicated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="localfilenotfound">
+<h2>LocalFileNotFound<a class="headerlink" href="#localfilenotfound" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.manager.version.LocalFileNotFound">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.manager.version.</code><code class="sig-name descname">LocalFileNotFound</code><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#LocalFileNotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.LocalFileNotFound" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="localprimaryfileunset">
+<h2>LocalPrimaryFileUnset<a class="headerlink" href="#localprimaryfileunset" title="Permalink to this headline">¶</a></h2>
+<dl class="py exception">
+<dt id="pycivitai.manager.version.LocalPrimaryFileUnset">
+<em class="property">exception </em><code class="sig-prename descclassname">pycivitai.manager.version.</code><code class="sig-name descname">LocalPrimaryFileUnset</code><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#LocalPrimaryFileUnset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.LocalPrimaryFileUnset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="localfile">
+<h2>LocalFile<a class="headerlink" href="#localfile" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycivitai.manager.version.LocalFile">
+<em class="property">class </em><code class="sig-prename descclassname">pycivitai.manager.version.</code><code class="sig-name descname">LocalFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">hash</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">is_primary</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/manager/version.html#LocalFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.manager.version.LocalFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data class of local managed file.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="model.html" class="btn btn-neutral float-right" title="pycivitai.manager.model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="pycivitai.manager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2023, narugo1992
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+    <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Other Versions</span>
+    v: dev/hash
+    <span class="fa fa-caret-down"></span>
+  </span>
+        <div class="rst-other-versions">
+                <dl>
+                    <dt>Tags</dt>
+                        <dd><a href="../../../../v0.0.1/api_doc/manager/version.html">v0.0.1</a></dd>
+                        <dd><a href="../../../../v0.0.2/api_doc/manager/version.html">v0.0.2</a></dd>
+                </dl>
+                <dl>
+                    <dt>Branches</dt>
+                        <dd><a href="version.html">dev/hash</a></dd>
+                        <dd><a href="../../../../main/api_doc/manager/version.html">main</a></dd>
+                </dl>
+        </div>
+    </div>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
