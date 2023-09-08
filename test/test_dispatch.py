@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from pycivitai.client import ResourceDuplicated
+from pycivitai.client import ResourceDuplicated, ModelFoundDuplicated
 from pycivitai.dispatch import civitai_find_online, civitai_download
 
 
@@ -66,6 +66,18 @@ class TestDispatch:
 
         with pytest.raises(ResourceDuplicated):
             _ = civitai_find_online('toki/飛鳥馬トキ/时 (Blue Archive)', 'v1.4', '*')
+        with pytest.raises(ModelFoundDuplicated):
+            _ = civitai_find_online('Paimon (Genshin Impact)')
+
+        resource = civitai_find_online('Paimon (Genshin Impact)', 'v1.4', creator='narugo1992')
+        assert resource.model_id == 125187
+        assert resource.model_name == 'Paimon (Genshin Impact)'
+        assert resource.version_id == 156954
+        assert resource.version_name == 'v1.4'
+        assert resource.filename == 'paimon_genshin.safetensors'
+        assert resource.sha256 == '3529E351565893CDB83DC8BDE9FF7F2E19D494B68A0AE6E43170F3C245016C8F'
+        assert resource.is_primary
+        assert resource.size == 14722160
 
     def test_civitai_download(self):
         file = civitai_download('amiya arknights (old)')

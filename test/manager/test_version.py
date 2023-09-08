@@ -10,7 +10,7 @@ from ..testings import get_testfile
 
 @pytest.fixture()
 def sample_version_dir():
-    return get_testfile('sample_repo_1', 'amiya_arknights_old__115427', 'v1_0__124870')
+    return get_testfile('sample_repo_1', 'amiya_arknights_old__narugo1992__115427', 'v1_0__124870')
 
 
 @pytest.fixture()
@@ -21,7 +21,7 @@ def amiya_v1_0_version_dir(sample_version_dir):
 
 @pytest.fixture()
 def amiya_v1_0_version_manager(amiya_v1_0_version_dir):
-    yield VersionManager(amiya_v1_0_version_dir, 115427, 124870)
+    yield VersionManager(amiya_v1_0_version_dir, 115427, 'narugo1992', 124870)
 
 
 @pytest.fixture()
@@ -36,7 +36,7 @@ def amiya_v1_0_version_size_dir(sample_version_dir):
 
 @pytest.fixture()
 def amiya_v1_0_version_size_manager(amiya_v1_0_version_size_dir):
-    yield VersionManager(amiya_v1_0_version_size_dir, 115427, 124870)
+    yield VersionManager(amiya_v1_0_version_size_dir, 115427, 'narugo1992', 124870)
 
 
 @pytest.fixture()
@@ -51,7 +51,7 @@ def amiya_v1_0_version_np_dir(sample_version_dir):
 
 @pytest.fixture()
 def amiya_v1_0_version_np_manager(amiya_v1_0_version_np_dir):
-    yield VersionManager(amiya_v1_0_version_np_dir, 115427, 124870)
+    yield VersionManager(amiya_v1_0_version_np_dir, 115427, 'narugo1992', 124870)
 
 
 @pytest.mark.unittest

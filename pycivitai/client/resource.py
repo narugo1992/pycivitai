@@ -1,7 +1,7 @@
 import fnmatch
 import re
 from dataclasses import dataclass
-from typing import Union
+from typing import Union, Optional
 
 from .http import get_session, ENDPOINT
 
@@ -37,6 +37,7 @@ class Resource:
     """
     model_name: str
     model_id: int
+    creator: str
     version_name: str
     version_id: int
     filename: str
@@ -70,12 +71,14 @@ def _name_strip(name: str) -> str:
     return re.sub(r'[\W_]+', '', name.lower())
 
 
-def find_model_by_name(model_name: str) -> dict:
+def find_model_by_name(model_name: str, creator: Optional[str] = None) -> dict:
     """
     Retrieve model information from the CiviTAI API based on the given model name.
 
     :param model_name: The name of the model to retrieve information for.
     :type model_name: str
+    :param creator: Name of creator. ``None`` means anyone.
+    :type creator: Optional[str]
     :return: The dictionary containing the model information.
     :rtype: dict
     :raises ModelNotFound: If the model with the given name is not found.
@@ -85,7 +88,8 @@ def find_model_by_name(model_name: str) -> dict:
     resp.raise_for_status()
     collected_items = []
     for item in resp.json()['items']:
-        if _name_strip(item['name']) == _name_strip(model_name):
+        if _name_strip(item['name']) == _name_strip(model_name) and \
+                (creator is None or _name_strip(item['creator']['username']) == _name_strip(creator)):
             collected_items.append(item)
 
     if not collected_items:
@@ -97,12 +101,14 @@ def find_model_by_name(model_name: str) -> dict:
         return collected_items[0]
 
 
-def find_model(model_name_or_id: Union[int, str]) -> dict:
+def find_model(model_name_or_id: Union[int, str], creator: Optional[str] = None) -> dict:
     """
     Find model information from the CiviTAI API based on the given model name or ID.
 
     :param model_name_or_id: The name or ID of the model to retrieve information for.
     :type model_name_or_id: Union[int, str]
+    :param creator: Name of creator. ``None`` means anyone.
+    :type creator: Optional[str]
     :return: The dictionary containing the model information.
     :rtype: dict
     :raises TypeError: If the model name or ID is not a valid integer or string.
@@ -110,11 +116,13 @@ def find_model(model_name_or_id: Union[int, str]) -> dict:
     if isinstance(model_name_or_id, int):
         return find_model_by_id(model_name_or_id)
     elif isinstance(model_name_or_id, str):
-        try:
-            model_id = int(model_name_or_id)
-            return find_model_by_id(model_id)
-        except (ModelNotFound, TypeError, ValueError):
-            return find_model_by_name(model_name_or_id)
+        if creator is None:
+            try:
+                model_id = int(model_name_or_id)
+                return find_model_by_id(model_id)
+            except (ModelNotFound, TypeError, ValueError):
+                pass
+        return find_model_by_name(model_name_or_id, creator)
     else:
         raise TypeError(f'Unknown model name or id, it should be an integer or string - {model_name_or_id!r}.')
 
@@ -192,6 +200,7 @@ def find_resource(model_data: dict, version_data: dict, pattern: str = None):
     file_size = int(round(file_size))
     return Resource(
         model_name=model_data['name'], model_id=model_data['id'],
+        creator=model_data['creator']['username'],
         version_name=version_data['name'], version_id=version_data['id'],
         filename=select_file['name'],
         url=select_file['downloadUrl'],

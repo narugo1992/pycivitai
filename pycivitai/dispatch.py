@@ -1,6 +1,6 @@
 import os
 from functools import lru_cache
-from typing import Union
+from typing import Union, Optional
 
 from .client import find_model, find_version, find_resource, Resource
 from .manager import DispatchManager
@@ -29,13 +29,15 @@ def _get_global_manager(offline: bool):
     return DispatchManager(_get_storage_dir(), offline)
 
 
-def civitai_download(model: Union[str, int], version: Union[str, int, None] = None,
-                     file: str = None, offline: bool = False):
+def civitai_download(model: Union[str, int], creator: Optional[str] = None,
+                     version: Union[str, int, None] = None, file: str = None, offline: bool = False):
     """
     Download and get the local file path of the specified model file.
 
     :param model: The name or ID of the model to download and manage.
     :type model: Union[str, int]
+    :param creator: Name of creator. ``None`` means anyone.
+    :type creator: Optional[str]
     :param version: The version ID or name of the model version. If None, the latest version is used.
     :type version: Union[str, int, None]
     :param file: The pattern or name of the file to get. If None, the primary file will be returned.
@@ -45,10 +47,11 @@ def civitai_download(model: Union[str, int], version: Union[str, int, None] = No
     :return: The local path of the specified model file.
     :rtype: str
     """
-    return _get_global_manager(offline).get_file(model, version, file)
+    return _get_global_manager(offline).get_file(model, version, file, creator=creator)
 
 
-def civitai_find_online(model: Union[str, int], version: Union[str, int, None] = None, file: str = None) -> Resource:
+def civitai_find_online(model: Union[str, int], version: Union[str, int, None] = None, file: str = None,
+                        creator: Optional[str] = None) -> Resource:
     """
     Find the online model resource (file) information from civitai.com.
 
@@ -58,9 +61,11 @@ def civitai_find_online(model: Union[str, int], version: Union[str, int, None] =
     :type version: Union[str, int, None]
     :param file: The pattern or name of the file to find. If None, the primary file will be returned.
     :type file: str
+    :param creator: Name of creator. ``None`` means anyone.
+    :type creator: Optional[str]
     :return: The Resource object containing the information about the specified model file.
     :rtype: Resource
     """
-    model_data = find_model(model)
+    model_data = find_model(model, creator)
     version_data = find_version(model_data, version)
     return find_resource(model_data, version_data, file)
