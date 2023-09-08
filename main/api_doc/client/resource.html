@@ -189,11 +189,14 @@
 <h2>find_model_by_name<a class="headerlink" href="#find-model-by-name" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="pycivitai.client.resource.find_model_by_name">
-<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_model_by_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_model_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_model_by_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_model_by_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_model_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_model_by_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve model information from the CiviTAI API based on the given model name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_name</strong> (<em>str</em>) – The name of the model to retrieve information for.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em>) – The name of the model to retrieve information for.</p></li>
+<li><p><strong>creator</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of creator. <code class="docutils literal notranslate"><span class="pre">None</span></code> means anyone.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The dictionary containing the model information.</p>
@@ -238,11 +241,14 @@
 <h2>find_model<a class="headerlink" href="#find-model" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="pycivitai.client.resource.find_model">
-<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">find_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../../_modules/pycivitai/client/resource.html#find_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.find_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find model information from the CiviTAI API based on the given model name or ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>model_name_or_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The name or ID of the model to retrieve information for.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name_or_id</strong> (<em>Union</em><em>[</em><em>int</em><em>, </em><em>str</em><em>]</em>) – The name or ID of the model to retrieve information for.</p></li>
+<li><p><strong>creator</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of creator. <code class="docutils literal notranslate"><span class="pre">None</span></code> means anyone.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The dictionary containing the model information.</p>
@@ -321,7 +327,7 @@
 <h2>Resource<a class="headerlink" href="#resource" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pycivitai.client.resource.Resource">
-<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">Resource</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">model_id</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">version_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">version_id</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">is_primary</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sha256</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">crc32</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">hashes</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.Resource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">Resource</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">model_id</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">version_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">version_id</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">is_primary</span><span class="p">:</span> <span class="n">bool</span></em>, <em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">sha256</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">crc32</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">hashes</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.Resource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Data class for resource.</p>
 </dd></dl>
 
@@ -426,7 +432,6 @@
                 </dl>
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="../../../dev/user/api_doc/client/resource.html">dev/user</a></dd>
                         <dd><a href="resource.html">main</a></dd>
                 </dl>
         </div>

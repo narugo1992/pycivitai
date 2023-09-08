@@ -161,7 +161,7 @@
   <h1>Source code for pycivitai.dispatch</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">find_model</span><span class="p">,</span> <span class="n">find_version</span><span class="p">,</span> <span class="n">find_resource</span><span class="p">,</span> <span class="n">Resource</span>
 <span class="kn">from</span> <span class="nn">.manager</span> <span class="kn">import</span> <span class="n">DispatchManager</span>
@@ -190,13 +190,15 @@
     <span class="k">return</span> <span class="n">DispatchManager</span><span class="p">(</span><span class="n">_get_storage_dir</span><span class="p">(),</span> <span class="n">offline</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="civitai_download"><a class="viewcode-back" href="../../api_doc/dispatch/index.html#pycivitai.dispatch.civitai_download">[docs]</a><span class="k">def</span> <span class="nf">civitai_download</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                     <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="civitai_download"><a class="viewcode-back" href="../../api_doc/dispatch/index.html#pycivitai.dispatch.civitai_download">[docs]</a><span class="k">def</span> <span class="nf">civitai_download</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                     <span class="n">version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Download and get the local file path of the specified model file.</span>
 
 <span class="sd">    :param model: The name or ID of the model to download and manage.</span>
 <span class="sd">    :type model: Union[str, int]</span>
+<span class="sd">    :param creator: Name of creator. ``None`` means anyone.</span>
+<span class="sd">    :type creator: Optional[str]</span>
 <span class="sd">    :param version: The version ID or name of the model version. If None, the latest version is used.</span>
 <span class="sd">    :type version: Union[str, int, None]</span>
 <span class="sd">    :param file: The pattern or name of the file to get. If None, the primary file will be returned.</span>
@@ -206,10 +208,11 @@
 <span class="sd">    :return: The local path of the specified model file.</span>
 <span class="sd">    :rtype: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">_get_global_manager</span><span class="p">(</span><span class="n">offline</span><span class="p">)</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">_get_global_manager</span><span class="p">(</span><span class="n">offline</span><span class="p">)</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">creator</span><span class="o">=</span><span class="n">creator</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="civitai_find_online"><a class="viewcode-back" href="../../api_doc/dispatch/index.html#pycivitai.dispatch.civitai_find_online">[docs]</a><span class="k">def</span> <span class="nf">civitai_find_online</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Resource</span><span class="p">:</span>
+<div class="viewcode-block" id="civitai_find_online"><a class="viewcode-back" href="../../api_doc/dispatch/index.html#pycivitai.dispatch.civitai_find_online">[docs]</a><span class="k">def</span> <span class="nf">civitai_find_online</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Resource</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find the online model resource (file) information from civitai.com.</span>
 
@@ -219,10 +222,12 @@
 <span class="sd">    :type version: Union[str, int, None]</span>
 <span class="sd">    :param file: The pattern or name of the file to find. If None, the primary file will be returned.</span>
 <span class="sd">    :type file: str</span>
+<span class="sd">    :param creator: Name of creator. ``None`` means anyone.</span>
+<span class="sd">    :type creator: Optional[str]</span>
 <span class="sd">    :return: The Resource object containing the information about the specified model file.</span>
 <span class="sd">    :rtype: Resource</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">model_data</span> <span class="o">=</span> <span class="n">find_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">model_data</span> <span class="o">=</span> <span class="n">find_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">creator</span><span class="p">)</span>
     <span class="n">version_data</span> <span class="o">=</span> <span class="n">find_version</span><span class="p">(</span><span class="n">model_data</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">find_resource</span><span class="p">(</span><span class="n">model_data</span><span class="p">,</span> <span class="n">version_data</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span></div>
 </pre></div>
@@ -267,7 +272,6 @@
                 </dl>
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="../../../dev/user/index.html">dev/user</a></dd>
                         <dd><a href="dispatch.html">main</a></dd>
                 </dl>
         </div>

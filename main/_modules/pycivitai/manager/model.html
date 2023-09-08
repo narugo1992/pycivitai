@@ -186,18 +186,20 @@
 <span class="sd">    Management of specific model.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ModelManager.__init__"><a class="viewcode-back" href="../../../api_doc/manager/model.html#pycivitai.manager.model.ModelManager.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
+<div class="viewcode-block" id="ModelManager.__init__"><a class="viewcode-back" href="../../../api_doc/manager/model.html#pycivitai.manager.model.ModelManager.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">model_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">offline</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Manages multiple versions of a model downloaded from civitai.com.</span>
 
 <span class="sd">        :param root_dir: The root directory where the model versions will be managed.</span>
 <span class="sd">        :param model_name_or_id: The name or ID of the model to manage.</span>
+<span class="sd">        :param creator: Name of creator. ``None`` means anyone.</span>
 <span class="sd">        :param model_data: Optional dictionary containing model information to avoid fetching it from the API.</span>
 <span class="sd">        :param offline: If True, the manager operates in offline mode, using locally downloaded resources.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span> <span class="o">=</span> <span class="n">root_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span> <span class="o">=</span> <span class="n">model_name_or_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creator</span> <span class="o">=</span> <span class="n">creator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span> <span class="o">=</span> <span class="n">model_data</span>
 
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">root_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -208,7 +210,7 @@
 
     <span class="k">def</span> <span class="nf">_get_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span> <span class="o">=</span> <span class="n">find_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span> <span class="o">=</span> <span class="n">find_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_data</span>
 
     <span class="k">def</span> <span class="nf">_version_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">version_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
@@ -256,7 +258,7 @@
 
             <span class="n">version_name</span><span class="p">,</span> <span class="n">version_id</span><span class="p">,</span> <span class="n">version_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_online_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">VersionManager</span><span class="p">(</span>
-                <span class="n">version_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="n">version_name</span><span class="p">,</span>
+                <span class="n">version_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="p">,</span> <span class="n">version_name</span><span class="p">,</span>
                 <span class="n">model_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_model</span><span class="p">(),</span> <span class="n">offline</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">)</span>
 
@@ -269,7 +271,7 @@
                 <span class="n">OfflineModeEnabled</span><span class="p">,</span>
         <span class="p">):</span>
             <span class="n">version_name</span><span class="p">,</span> <span class="n">version_id</span><span class="p">,</span> <span class="n">version_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_local_version</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">VersionManager</span><span class="p">(</span><span class="n">version_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="n">version_name</span><span class="p">,</span> <span class="n">offline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">VersionManager</span><span class="p">(</span><span class="n">version_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="p">,</span> <span class="n">version_name</span><span class="p">,</span> <span class="n">offline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ModelManager.get_file"><a class="viewcode-back" href="../../../api_doc/manager/model.html#pycivitai.manager.model.ModelManager.get_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">pattern</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -297,7 +299,8 @@
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
             <span class="n">retval</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">version_name</span><span class="p">,</span> <span class="n">version_id</span><span class="p">,</span> <span class="n">version_dir</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_list_local_versions</span><span class="p">():</span>
-                <span class="n">retval</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VersionManager</span><span class="p">(</span><span class="n">version_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="n">version_name</span><span class="p">,</span> <span class="n">offline</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+                <span class="n">retval</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VersionManager</span><span class="p">(</span><span class="n">version_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="p">,</span>
+                                             <span class="n">version_name</span><span class="p">,</span> <span class="n">offline</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
             <span class="k">return</span> <span class="n">retval</span></div>
 
@@ -380,7 +383,6 @@
                 </dl>
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="../../../../dev/user/index.html">dev/user</a></dd>
                         <dd><a href="model.html">main</a></dd>
                 </dl>
         </div>

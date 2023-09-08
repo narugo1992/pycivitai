@@ -162,7 +162,7 @@
 <span></span><span class="kn">import</span> <span class="nn">fnmatch</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">.http</span> <span class="kn">import</span> <span class="n">get_session</span><span class="p">,</span> <span class="n">ENDPOINT</span>
 
@@ -198,6 +198,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">model_id</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">creator</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">version_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">version_id</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span>
@@ -233,12 +234,14 @@
     <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\W_]+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
 
-<div class="viewcode-block" id="find_model_by_name"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.find_model_by_name">[docs]</a><span class="k">def</span> <span class="nf">find_model_by_name</span><span class="p">(</span><span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="viewcode-block" id="find_model_by_name"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.find_model_by_name">[docs]</a><span class="k">def</span> <span class="nf">find_model_by_name</span><span class="p">(</span><span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve model information from the CiviTAI API based on the given model name.</span>
 
 <span class="sd">    :param model_name: The name of the model to retrieve information for.</span>
 <span class="sd">    :type model_name: str</span>
+<span class="sd">    :param creator: Name of creator. ``None`` means anyone.</span>
+<span class="sd">    :type creator: Optional[str]</span>
 <span class="sd">    :return: The dictionary containing the model information.</span>
 <span class="sd">    :rtype: dict</span>
 <span class="sd">    :raises ModelNotFound: If the model with the given name is not found.</span>
@@ -248,7 +251,8 @@
     <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
     <span class="n">collected_items</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;items&#39;</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">model_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="p">(</span><span class="n">creator</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;creator&#39;</span><span class="p">][</span><span class="s1">&#39;username&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">creator</span><span class="p">)):</span>
             <span class="n">collected_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">collected_items</span><span class="p">:</span>
@@ -260,12 +264,14 @@
         <span class="k">return</span> <span class="n">collected_items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="find_model"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.find_model">[docs]</a><span class="k">def</span> <span class="nf">find_model</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="viewcode-block" id="find_model"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.find_model">[docs]</a><span class="k">def</span> <span class="nf">find_model</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Find model information from the CiviTAI API based on the given model name or ID.</span>
 
 <span class="sd">    :param model_name_or_id: The name or ID of the model to retrieve information for.</span>
 <span class="sd">    :type model_name_or_id: Union[int, str]</span>
+<span class="sd">    :param creator: Name of creator. ``None`` means anyone.</span>
+<span class="sd">    :type creator: Optional[str]</span>
 <span class="sd">    :return: The dictionary containing the model information.</span>
 <span class="sd">    :rtype: dict</span>
 <span class="sd">    :raises TypeError: If the model name or ID is not a valid integer or string.</span>
@@ -273,11 +279,13 @@
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">find_model_by_id</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">model_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">find_model_by_id</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
-        <span class="k">except</span> <span class="p">(</span><span class="n">ModelNotFound</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">find_model_by_name</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">creator</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">model_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">find_model_by_id</span><span class="p">(</span><span class="n">model_id</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">ModelNotFound</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+                <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">find_model_by_name</span><span class="p">(</span><span class="n">model_name_or_id</span><span class="p">,</span> <span class="n">creator</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown model name or id, it should be an integer or string - </span><span class="si">{</span><span class="n">model_name_or_id</span><span class="si">!r}</span><span class="s1">.&#39;</span><span class="p">)</span></div>
 
@@ -355,6 +363,7 @@
     <span class="n">file_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">file_size</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">Resource</span><span class="p">(</span>
         <span class="n">model_name</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">model_id</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
+        <span class="n">creator</span><span class="o">=</span><span class="n">model_data</span><span class="p">[</span><span class="s1">&#39;creator&#39;</span><span class="p">][</span><span class="s1">&#39;username&#39;</span><span class="p">],</span>
         <span class="n">version_name</span><span class="o">=</span><span class="n">version_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">version_id</span><span class="o">=</span><span class="n">version_data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>
         <span class="n">filename</span><span class="o">=</span><span class="n">select_file</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
         <span class="n">url</span><span class="o">=</span><span class="n">select_file</span><span class="p">[</span><span class="s1">&#39;downloadUrl&#39;</span><span class="p">],</span>
@@ -406,7 +415,6 @@
                 </dl>
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="../../../../dev/user/index.html">dev/user</a></dd>
                         <dd><a href="resource.html">main</a></dd>
                 </dl>
         </div>
