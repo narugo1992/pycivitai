@@ -1,7 +1,7 @@
 import fnmatch
 import re
 from dataclasses import dataclass
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 from .http import get_session, ENDPOINT
 
@@ -47,6 +47,7 @@ class Resource:
     crc32: str
     hashes: dict
     size: int
+    tags: List[str]
 
 
 def find_model_by_id(model_id) -> dict:
@@ -211,4 +212,5 @@ def find_resource(model_data: dict, version_data: dict, pattern: str = None):
         hashes=select_file['hashes'],
         is_primary=select_file.get('primary', False),
         size=file_size,
+        tags=model_data['tags'],
     )
