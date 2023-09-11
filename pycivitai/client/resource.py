@@ -106,7 +106,7 @@ def find_model_by_name(model_name: str, creator: Optional[str] = None) -> dict:
 
 
 def _maybe_a_hash(text: str):
-    return re.fullmatch(r'^[\dA-F]{8,}$', text.upper())
+    return isinstance(text, str) and re.fullmatch(r'^[\dA-F]{8,}$', text.upper())
 
 
 def find_version_id_by_hash(model_hash: str) -> Optional[Tuple[int, int, str]]:
