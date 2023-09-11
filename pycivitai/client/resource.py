@@ -1,7 +1,8 @@
 import fnmatch
 import re
 from dataclasses import dataclass
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Tuple
+from urllib.parse import quote_plus
 
 from .http import get_session, ENDPOINT
 
@@ -102,6 +103,31 @@ def find_model_by_name(model_name: str, creator: Optional[str] = None) -> dict:
         raise ModelFoundDuplicated(model_name, all_names)
     else:
         return collected_items[0]
+
+
+def _maybe_a_hash(text: str):
+    return re.fullmatch(r'^[\dA-F]{8,}$', text.upper())
+
+
+def find_version_id_by_hash(model_hash: str) -> Optional[Tuple[int, int, str]]:
+    if not _maybe_a_hash(model_hash):
+        return None
+
+    resp = get_session().get(f'{ENDPOINT}/api/v1/model-versions/by-hash/{quote_plus(model_hash.upper())}')
+    if resp.status_code == 404:
+        return None
+    else:
+        resp.raise_for_status()
+        data = resp.json()
+        version_file = None
+        for file in data['files']:
+            if model_hash.upper() in set((file.get('hashes') or {}).values()):
+                version_file = file['name']
+                break
+
+        assert version_file is not None, f'No file in model version {data["id"]!r} ' \
+                                         f'matches the given hash {model_hash!r}.'
+        return data['modelId'], data['id'], version_file
 
 
 def find_model(model_name_or_id: Union[int, str], creator: Optional[str] = None) -> dict:

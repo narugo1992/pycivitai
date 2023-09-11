@@ -1,8 +1,9 @@
 import os
+import warnings
 from functools import lru_cache
 from typing import Union, Optional
 
-from .client import find_model, find_version, find_resource, Resource
+from .client import find_model, find_version, find_resource, Resource, find_version_id_by_hash
 from .manager import DispatchManager
 
 
@@ -66,6 +67,15 @@ def civitai_find_online(model: Union[str, int], version: Union[str, int, None] =
     :return: The Resource object containing the information about the specified model file.
     :rtype: Resource
     """
+    hash_finding = find_version_id_by_hash(model)
+    if hash_finding is not None:
+        new_model, new_version, new_file = hash_finding
+        if version is not None and new_version != version:
+            warnings.warn(f'Model {model!r} founded by hash, value of version argument ({version!r}) will be ignored.')
+        if file is not None and new_file != file:
+            warnings.warn(f'Model {model!r} founded by hash, value of file argument ({file!r}) will be ignored.')
+        model, version, file = new_model, new_version, new_file
+
     model_data = find_model(model, creator)
     version_data = find_version(model_data, version)
     return find_resource(model_data, version_data, file)
