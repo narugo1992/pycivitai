@@ -24,6 +24,12 @@ def calculate_sha256(file_path):
 @pytest.mark.unittest
 class TestDispatch:
     def test_civitai_find_online(self):
+        resource = civitai_find_online(7240, version='Meina V11')
+        assert resource.model_id == 7240
+        assert resource.model_name == 'MeinaMix'
+        assert resource.version_id == 119057
+        assert resource.version_name == 'Meina V11'
+
         resource = civitai_find_online('明日方舟-安洁莉娜,Arknights-Angeline')
         assert resource.model_id == 5632
         assert resource.model_name == '明日方舟-安洁莉娜,Arknights-Angeline'
