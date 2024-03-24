@@ -4,7 +4,7 @@ import os
 import pytest
 
 from pycivitai.client import ResourceDuplicated, ModelFoundDuplicated
-from pycivitai.dispatch import civitai_find_online, civitai_download
+from pycivitai.dispatch import civitai_find_online, civitai_download, civitai_search_online
 
 
 def calculate_sha256(file_path):
@@ -84,6 +84,16 @@ class TestDispatch:
         assert resource.sha256 == '3529E351565893CDB83DC8BDE9FF7F2E19D494B68A0AE6E43170F3C245016C8F'
         assert resource.is_primary
         assert resource.size == 14722160
+
+    def test_civitai_search_online(self):
+        results = civitai_search_online('kal_tsit_arknights', creator='narugo1992')
+        assert len(results) == 1
+
+        model = results[0]
+        assert model.model_id == 121406
+        assert model.model_name == "kal'tsit/ケルシー/凯尔希 (Arknights)"
+        assert model.creator == 'narugo1992'
+        assert repr(model) == '<Model name: "kal\'tsit/ケルシー/凯尔希 (Arknights)", id: 121406, creator: \'narugo1992\'>'
 
     def test_civitai_download(self):
         file = civitai_download('amiya arknights (old)')
