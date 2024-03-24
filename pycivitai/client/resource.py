@@ -31,6 +31,27 @@ class ResourceDuplicated(Exception):
     pass
 
 
+class Model:
+    def __init__(self, data):
+        self.data = data
+
+    @property
+    def model_name(self) -> str:
+        return self.data['name']
+
+    @property
+    def model_id(self) -> int:
+        return self.data['id']
+
+    @property
+    def creator(self) -> str:
+        return self.data['creator']['username']
+
+    def __repr__(self):
+        return (f'<{self.__class__.__name__} name: {self.model_name!r}, '
+                f'id: {self.model_id!r}, creator: {self.creator!r}>')
+
+
 @dataclass
 class Resource:
     """
@@ -75,6 +96,35 @@ def _name_strip(name: str) -> str:
     return re.sub(r'[\W_]+', '', name.lower())
 
 
+def list_models_by_name(model_name: str, creator: Optional[str] = None, strict: bool = False) -> List[dict]:
+    """
+    Retrieve model information from the CiviTAI API based on the given model name.
+
+    :param model_name: The name of the model to retrieve information for.
+    :type model_name: str
+    :param creator: Name of creator. ``None`` means anyone.
+    :type creator: Optional[str]
+    :param strict: Strict filter all the results or not. Default is ``False``.
+    :type strict: bool
+    :return: The list of dictionaries containing the searched model information.
+    :rtype: dict
+    """
+    _session = get_session()
+    params = {'query': model_name}
+    if creator:
+        params['username'] = creator
+
+    resp = _session.get(f'{ENDPOINT}/api/v1/models', params=params)
+    resp.raise_for_status()
+    collected_items = []
+    for item in resp.json()['items']:
+        if not strict or (_name_strip(item['name']) == _name_strip(model_name) and
+                          (creator is None or _name_strip(item['creator']['username']) == _name_strip(creator))):
+            collected_items.append(item)
+
+    return collected_items
+
+
 def find_model_by_name(model_name: str, creator: Optional[str] = None) -> dict:
     """
     Retrieve model information from the CiviTAI API based on the given model name.
@@ -88,14 +138,7 @@ def find_model_by_name(model_name: str, creator: Optional[str] = None) -> dict:
     :raises ModelNotFound: If the model with the given name is not found.
     :raises ModelFoundDuplicated: If multiple models with the same name are found.
     """
-    resp = get_session().get(f'{ENDPOINT}/api/v1/models', params={'query': model_name})
-    resp.raise_for_status()
-    collected_items = []
-    for item in resp.json()['items']:
-        if _name_strip(item['name']) == _name_strip(model_name) and \
-                (creator is None or _name_strip(item['creator']['username']) == _name_strip(creator)):
-            collected_items.append(item)
-
+    collected_items = list_models_by_name(model_name, creator, strict=True)
     if not collected_items:
         raise ModelNotFound(model_name)
     elif len(collected_items) > 1:

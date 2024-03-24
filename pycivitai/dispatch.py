@@ -1,9 +1,10 @@
 import os
 import warnings
 from functools import lru_cache
-from typing import Union, Optional
+from typing import Union, Optional, List
 
-from .client import find_model, find_version, find_resource, Resource, find_version_id_by_hash
+from .client import find_model, find_version, find_resource, Resource, find_version_id_by_hash, Model, \
+    list_models_by_name
 from .manager import DispatchManager
 
 
@@ -79,3 +80,16 @@ def civitai_find_online(model: Union[str, int], version: Union[str, int, None] =
     model_data = find_model(model, creator)
     version_data = find_version(model_data, version)
     return find_resource(model_data, version_data, file)
+
+
+def civitai_search_online(model_name: str, creator: Optional[str] = None) -> List[Model]:
+    """
+    Overview:
+        Search from civitai site.
+
+    :param model_name: The name of the model to retrieve information for.
+    :type model_name: str
+    :param creator: Name of creator. ``None`` means anyone.
+    :type creator: Optional[str]
+    """
+    return list(map(Model, list_models_by_name(model_name, creator, strict=False)))
