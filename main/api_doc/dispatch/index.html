@@ -97,6 +97,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">pycivitai.dispatch</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#civitai-download">civitai_download</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#civitai-find-online">civitai_find_online</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#civitai-search-online">civitai_search_online</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../manager/index.html">pycivitai.manager</a></li>
@@ -220,6 +221,26 @@
 </dd></dl>
 
 </section>
+<section id="civitai-search-online">
+<h2>civitai_search_online<a class="headerlink" href="#civitai-search-online" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pycivitai.dispatch.civitai_search_online">
+<code class="sig-prename descclassname">pycivitai.dispatch.</code><code class="sig-name descname">civitai_search_online</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="../client/resource.html#pycivitai.client.resource.Model" title="pycivitai.client.resource.Model">pycivitai.client.resource.Model</a><span class="p">]</span><a class="reference internal" href="../../_modules/pycivitai/dispatch.html#civitai_search_online"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.dispatch.civitai_search_online" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Overview:</dt><dd><p>Search from civitai site.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em>) – The name of the model to retrieve information for.</p></li>
+<li><p><strong>creator</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of creator. <code class="docutils literal notranslate"><span class="pre">None</span></code> means anyone.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -276,7 +297,6 @@
                 </dl>
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="../../../dev/search/api_doc/dispatch/index.html">dev/search</a></dd>
                         <dd><a href="index.html">main</a></dd>
                 </dl>
         </div>

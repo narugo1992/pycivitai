@@ -20,3 +20,10 @@ civitai_find_online
 
 
 
+civitai_search_online
+--------------------------
+
+.. autofunction:: civitai_search_online
+
+
+

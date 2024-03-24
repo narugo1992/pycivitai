@@ -95,11 +95,13 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">pycivitai.client</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="http.html">pycivitai.client.http</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">pycivitai.client.resource</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#list-models-by-name">list_models_by_name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#find-model-by-name">find_model_by_name</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#find-model-by-id">find_model_by_id</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#find-model">find_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#find-version">find_version</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#find-resource">find_resource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model">Model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#resource">Resource</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#resourcenotfound">ResourceNotFound</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#modelnotfound">ModelNotFound</a></li>
@@ -185,6 +187,30 @@
     
   <section id="module-pycivitai.client.resource">
 <span id="pycivitai-client-resource"></span><h1>pycivitai.client.resource<a class="headerlink" href="#module-pycivitai.client.resource" title="Permalink to this headline">¶</a></h1>
+<section id="list-models-by-name">
+<h2>list_models_by_name<a class="headerlink" href="#list-models-by-name" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="pycivitai.client.resource.list_models_by_name">
+<code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">list_models_by_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">creator</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">strict</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>dict<span class="p">]</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#list_models_by_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.list_models_by_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve model information from the CiviTAI API based on the given model name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> (<em>str</em>) – The name of the model to retrieve information for.</p></li>
+<li><p><strong>creator</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Name of creator. <code class="docutils literal notranslate"><span class="pre">None</span></code> means anyone.</p></li>
+<li><p><strong>strict</strong> (<em>bool</em>) – Strict filter all the results or not. Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of dictionaries containing the searched model information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="find-model-by-name">
 <h2>find_model_by_name<a class="headerlink" href="#find-model-by-name" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
@@ -323,6 +349,14 @@
 </dd></dl>
 
 </section>
+<section id="model">
+<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pycivitai.client.resource.Model">
+<em class="property">class </em><code class="sig-prename descclassname">pycivitai.client.resource.</code><code class="sig-name descname">Model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pycivitai/client/resource.html#Model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pycivitai.client.resource.Model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
 <section id="resource">
 <h2>Resource<a class="headerlink" href="#resource" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
@@ -436,7 +470,6 @@
                 </dl>
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="../../../dev/search/api_doc/client/resource.html">dev/search</a></dd>
                         <dd><a href="resource.html">main</a></dd>
                 </dl>
         </div>

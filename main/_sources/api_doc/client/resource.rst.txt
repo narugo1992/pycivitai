@@ -6,6 +6,12 @@ pycivitai.client.resource
 .. automodule:: pycivitai.client.resource
 
 
+list_models_by_name
+-------------------------------------------
+
+.. autofunction:: list_models_by_name
+
+
 find_model_by_name
 -------------------------------------------
 
@@ -34,6 +40,13 @@ find_resource
 -------------------------------------------
 
 .. autofunction:: find_resource
+
+
+Model
+-------------------------------------------
+
+.. autoclass:: Model
+    :members:
 
 
 Resource

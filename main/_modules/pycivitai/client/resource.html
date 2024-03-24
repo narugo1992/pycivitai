@@ -192,6 +192,27 @@
     <span class="k">pass</span></div>
 
 
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">model_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">model_id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">creator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;creator&#39;</span><span class="p">][</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1"> name: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="si">!r}</span><span class="s1">, &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;id: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model_id</span><span class="si">!r}</span><span class="s1">, creator: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">creator</span><span class="si">!r}</span><span class="s1">&gt;&#39;</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.Resource">[docs]</a><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Resource</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -236,6 +257,35 @@
     <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\W_]+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
 
+<div class="viewcode-block" id="list_models_by_name"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.list_models_by_name">[docs]</a><span class="k">def</span> <span class="nf">list_models_by_name</span><span class="p">(</span><span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieve model information from the CiviTAI API based on the given model name.</span>
+
+<span class="sd">    :param model_name: The name of the model to retrieve information for.</span>
+<span class="sd">    :type model_name: str</span>
+<span class="sd">    :param creator: Name of creator. ``None`` means anyone.</span>
+<span class="sd">    :type creator: Optional[str]</span>
+<span class="sd">    :param strict: Strict filter all the results or not. Default is ``False``.</span>
+<span class="sd">    :type strict: bool</span>
+<span class="sd">    :return: The list of dictionaries containing the searched model information.</span>
+<span class="sd">    :rtype: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_session</span> <span class="o">=</span> <span class="n">get_session</span><span class="p">()</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">}</span>
+    <span class="k">if</span> <span class="n">creator</span><span class="p">:</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">creator</span>
+
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">_session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ENDPOINT</span><span class="si">}</span><span class="s1">/api/v1/models&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="n">collected_items</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;items&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">or</span> <span class="p">(</span><span class="n">_name_strip</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span> <span class="ow">and</span>
+                          <span class="p">(</span><span class="n">creator</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;creator&#39;</span><span class="p">][</span><span class="s1">&#39;username&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">creator</span><span class="p">))):</span>
+            <span class="n">collected_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">collected_items</span></div>
+
+
 <div class="viewcode-block" id="find_model_by_name"><a class="viewcode-back" href="../../../api_doc/client/resource.html#pycivitai.client.resource.find_model_by_name">[docs]</a><span class="k">def</span> <span class="nf">find_model_by_name</span><span class="p">(</span><span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">creator</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieve model information from the CiviTAI API based on the given model name.</span>
@@ -249,14 +299,7 @@
 <span class="sd">    :raises ModelNotFound: If the model with the given name is not found.</span>
 <span class="sd">    :raises ModelFoundDuplicated: If multiple models with the same name are found.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">get_session</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">ENDPOINT</span><span class="si">}</span><span class="s1">/api/v1/models&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;query&#39;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">})</span>
-    <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-    <span class="n">collected_items</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;items&#39;</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span> <span class="ow">and</span> \
-                <span class="p">(</span><span class="n">creator</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;creator&#39;</span><span class="p">][</span><span class="s1">&#39;username&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="n">_name_strip</span><span class="p">(</span><span class="n">creator</span><span class="p">)):</span>
-            <span class="n">collected_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
+    <span class="n">collected_items</span> <span class="o">=</span> <span class="n">list_models_by_name</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">creator</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">collected_items</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">ModelNotFound</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">collected_items</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -447,7 +490,6 @@
                 </dl>
                 <dl>
                     <dt>Branches</dt>
-                        <dd><a href="../../../../dev/search/index.html">dev/search</a></dd>
                         <dd><a href="resource.html">main</a></dd>
                 </dl>
         </div>
