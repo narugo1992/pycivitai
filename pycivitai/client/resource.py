@@ -220,7 +220,7 @@ def find_version(model_data: dict, version: Union[int, str, None] = None):
         all_select_versions = []
         exist_ids = set()
         for vitem in versions:
-            if vitem['id'] == version or _name_strip(vitem['name']) == _name_strip(str(version)) \
+            if (vitem['id'] == version or _name_strip(vitem['name']) == _name_strip(str(version))) \
                     and vitem['id'] not in exist_ids:
                 all_select_versions.append(vitem)
                 exist_ids.add(vitem['id'])
